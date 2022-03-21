@@ -1,4 +1,4 @@
-# EasyDecision
+# EasyDecision 2
 
 App to help people making decisions
 
