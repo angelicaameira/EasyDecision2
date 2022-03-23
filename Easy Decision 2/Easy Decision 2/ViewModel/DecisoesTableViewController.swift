@@ -15,9 +15,23 @@ class DecisoesTableViewController: UITableViewController {
     var decisoesListener: ListenerRegistration!
     var decisaoSelecionada: Decisao?
     
+    // MARK: - View code
+    
+//    private lazy var botaoAdicionarDecisao: UIBarButtonItem = {
+//        let view =  UIBarButtonItem()
+//        return view
+//      }()
+    
+    override func loadView() {
+        super.loadView()
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         firestore = Firestore.firestore()
+        
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celulaDecisao")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,8 +43,7 @@ class DecisoesTableViewController: UITableViewController {
         decisoesListener.remove()
     }
     
-    func addListenerRecuperarDecisoes(){
-        
+    func addListenerRecuperarDecisoes() {
         decisoesListener = firestore.collection("decisoes").addSnapshotListener({ querySnapshot, erro in
             
             if erro == nil {
