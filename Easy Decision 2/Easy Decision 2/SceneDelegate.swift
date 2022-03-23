@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  EasyDecision2
+//  Easy Decision 2
 //
 //  Created by Angélica Andrade de Meira on 21/03/22.
 //
