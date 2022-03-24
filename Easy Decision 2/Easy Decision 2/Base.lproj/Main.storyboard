@@ -32,11 +32,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Easy Decision 2" id="Tob-Al-vLi">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hb3-k3-ZMu">
-                            <connections>
-                                <segue destination="s7h-uw-vyJ" kind="presentation" identifier="adicionaDecisao" id="vSQ-P6-2EQ"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hb3-k3-ZMu"/>
                     </navigationItem>
                     <connections>
                         <segue destination="jwl-rD-pHj" kind="show" identifier="mostraOpcoes" id="8O6-LO-sMz"/>
@@ -123,11 +119,11 @@
             <objects>
                 <viewController id="OFi-fS-SH6" customClass="AdicionaDecisaoViewController" customModule="Easy_Decision_2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yQ7-0l-P6W">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Insira a descrição da decisão" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hId-XU-Gcu">
-                                <rect key="frame" x="20" y="66" width="374" height="34"/>
+                                <rect key="frame" x="20" y="98" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -141,15 +137,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Adicionar decisão" id="Uzo-5L-AH3">
-                        <barButtonItem key="rightBarButtonItem" title="Feito" id="yRG-td-Cjr">
-                            <connections>
-                                <action selector="botaoFeito:" destination="OFi-fS-SH6" id="FUQ-hd-6Dy"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Feito" id="yRG-td-Cjr"/>
                     </navigationItem>
-                    <connections>
-                        <outlet property="campoDescricao" destination="hId-XU-Gcu" id="V5K-Y0-T83"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctJ-6O-vJK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -179,7 +168,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="s7h-uw-vyJ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tGK-bz-heK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

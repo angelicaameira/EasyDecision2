@@ -17,14 +17,20 @@ class DecisoesTableViewController: UITableViewController {
     
     // MARK: - View code
     
-//    private lazy var botaoAdicionarDecisao: UIBarButtonItem = {
-//        let view =  UIBarButtonItem()
-//        return view
-//      }()
+    private lazy var botaoAdicionarDecisao: UIBarButtonItem = {
+        let view = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(vaiParaAdicionarDecisao))
+        return view
+      }()
+    
+    @objc func vaiParaAdicionarDecisao(){
+        self.present(UINavigationController(rootViewController: AdicionaDecisaoViewController()), animated: true)
+    }
     
     override func loadView() {
         super.loadView()
         
+        self.navigationItem.title = "Decisões"
+        self.navigationItem.rightBarButtonItems = [botaoAdicionarDecisao]
     }
     
     override func viewDidLoad() {
@@ -37,6 +43,7 @@ class DecisoesTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addListenerRecuperarDecisoes()
+        self.decisaoSelecionada = nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -60,14 +67,12 @@ class DecisoesTableViewController: UITableViewController {
                         }
                     }
                     self.tableView.reloadData()
-                    self.decisaoSelecionada = nil
                 }
             }
         })
     }
     
     func removerDecisao(indexPath: IndexPath){
-        
         let decisao = self.listaDeDecisoes[indexPath.row]
         firestore.collection("decisoes").document(decisao.id!).delete()
         self.listaDeDecisoes.remove(at: indexPath.row)
@@ -108,20 +113,12 @@ class DecisoesTableViewController: UITableViewController {
                 guard let self = self else { return }
                 let indice = indexPath.row
                 self.decisaoSelecionada = self.listaDeDecisoes[indice]
+                let viewDeDestino = AdicionaDecisaoViewController()
+                viewDeDestino.decisao = self.decisaoSelecionada
                 
-                self.performSegue(withIdentifier: "adicionaDecisao", sender: self)
+                self.present(UINavigationController(rootViewController: viewDeDestino), animated: true)
             })
         ]
         return UISwipeActionsConfiguration(actions: acoes)
     }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "adicionaDecisao" {
-            let navigationController = segue.destination as! UINavigationController
-            let viewDestino = navigationController.viewControllers.first as! AdicionaDecisaoViewController
-            viewDestino.decisao = self.decisaoSelecionada
-        }
-    }
-    
 }
