@@ -35,6 +35,7 @@ class DecisoesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         firestore = Firestore.firestore()
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celulaDecisao")
@@ -96,6 +97,7 @@ class DecisoesTableViewController: UITableViewController {
         let indice = indexPath.row
         let dadosDecisao = self.listaDeDecisoes[indice]
         
+        celula.accessoryType = .disclosureIndicator
         celula.textLabel?.text = dadosDecisao.descricao
         
         return celula

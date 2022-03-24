@@ -9,6 +9,5 @@ target 'Easy Decision 2' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
-  #pod 'FirebaseFirestoreSwift'
 
 end

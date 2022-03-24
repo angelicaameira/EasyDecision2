@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class AdicionaDecisaoViewController: UIViewController {
+class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
     
     var firestore: Firestore!
     var decisao: Decisao?
@@ -27,6 +27,7 @@ class AdicionaDecisaoViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.borderStyle = .roundedRect
         view.placeholder = "Insira a descrição da decisão"
+        view.returnKeyType = .done
         return view
       }()
     
@@ -55,6 +56,8 @@ class AdicionaDecisaoViewController: UIViewController {
         campoDescricao.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
         
         campoDescricao.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        
+        campoDescricao.delegate = self
     }
     
     func salvarNovaDecisao(){
@@ -86,4 +89,10 @@ class AdicionaDecisaoViewController: UIViewController {
             campoDescricao.text = (decisao.descricao)
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        feito()
+        return true
+    }
 }
+
