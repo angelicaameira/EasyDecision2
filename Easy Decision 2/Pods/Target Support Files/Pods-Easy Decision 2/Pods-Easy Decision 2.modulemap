@@ -1,6 +1,0 @@
-framework module Pods_Easy_Decision_2 {
-  umbrella header "Pods-Easy Decision 2-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -103,6 +103,13 @@ class DecisoesTableViewController: UITableViewController {
         return celula
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.decisaoSelecionada = self.listaDeDecisoes[indexPath.row]
+        let viewDestino = OpcoesTableViewController()
+        viewDestino.decisao = self.decisaoSelecionada
+        self.navigationController?.pushViewController(viewDestino, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let acoes = [
             
@@ -117,7 +124,6 @@ class DecisoesTableViewController: UITableViewController {
                 self.decisaoSelecionada = self.listaDeDecisoes[indice]
                 let viewDeDestino = AdicionaDecisaoViewController()
                 viewDeDestino.decisao = self.decisaoSelecionada
-                
                 self.present(UINavigationController(rootViewController: viewDeDestino), animated: true)
             })
         ]
