@@ -66,29 +66,30 @@ class OpcoesTableViewController: UITableViewController {
     }
     
     func addListenerRecuperarOpcoes() {
-        opcoesListener = firestore.collection("opcoes").addSnapshotListener({ [self] querySnapshot, erro in
-            
-            if erro == nil {
-                self.listaDeOpcoes.removeAll()
-                
-                if let snapshot = querySnapshot {
-                    if let decisao = self.decisao {
-                        if let idDecisao = self.decisao?.id{
+        
+        if let decisao = self.decisao {
+            if let idDecisao = self.decisao?.id{
+                opcoesListener = firestore.collection("opcoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
+                    if erro == nil {
+                        self.listaDeOpcoes.removeAll()
+                        if let snapshot = querySnapshot {
                             for document in snapshot.documents {
                                 do {
                                     let dictionary = document.data()
                                     let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
                                     self.listaDeOpcoes.append(opcao)
                                 } catch {
-                                  print("Error when trying to decode Opção: \(error)")
+                                    print("Error when trying to decode Opção: \(error)")
                                 }
                             }
                         }
+                        self.tableView.reloadData()
                     }
-                self.tableView.reloadData()
                 }
             }
-        })
+        }else{
+            return
+        }
     }
     
     func removerOpcao(indexPath: IndexPath){

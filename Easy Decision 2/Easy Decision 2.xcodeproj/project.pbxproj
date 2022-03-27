@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20C566962A4F1099033D2054 /* Pods_Easy_Decision_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB20C03FE19D0F6ED7895A0 /* Pods_Easy_Decision_2.framework */; };
 		BF5F4AD227EE174800F8D2ED /* Opcao.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD127EE174800F8D2ED /* Opcao.swift */; };
 		BF5F4AD427EE17D400F8D2ED /* OpcoesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */; };
 		BF5F4AD627EE2AE800F8D2ED /* AdicionaOpcaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */; };
@@ -22,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2EB20C03FE19D0F6ED7895A0 /* Pods_Easy_Decision_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Easy_Decision_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		367F33E9FBE6A258F173A765 /* Pods-Easy Decision 2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Easy Decision 2.debug.xcconfig"; path = "Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2.debug.xcconfig"; sourceTree = "<group>"; };
+		A2B2AAF2317AA3B5FEAE3BB5 /* Pods-Easy Decision 2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Easy Decision 2.release.xcconfig"; path = "Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2.release.xcconfig"; sourceTree = "<group>"; };
 		BF5F4AD127EE174800F8D2ED /* Opcao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opcao.swift; sourceTree = "<group>"; };
 		BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcoesTableViewController.swift; sourceTree = "<group>"; };
 		BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaOpcaoViewController.swift; sourceTree = "<group>"; };
@@ -43,12 +47,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20C566962A4F1099033D2054 /* Pods_Easy_Decision_2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D7CAD9E5C199B4CC1546122 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2EB20C03FE19D0F6ED7895A0 /* Pods_Easy_Decision_2.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BF8C63D727E913FF0051926E /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +95,7 @@
 				BFD6E9E027E8C9D80093358B /* Easy Decision 2 */,
 				BFD6E9DF27E8C9D80093358B /* Products */,
 				D7924B8460B13464BF7697BF /* Pods */,
+				4D7CAD9E5C199B4CC1546122 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +127,8 @@
 		D7924B8460B13464BF7697BF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				367F33E9FBE6A258F173A765 /* Pods-Easy Decision 2.debug.xcconfig */,
+				A2B2AAF2317AA3B5FEAE3BB5 /* Pods-Easy Decision 2.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -124,9 +140,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFD6E9F227E8C9D90093358B /* Build configuration list for PBXNativeTarget "Easy Decision 2" */;
 			buildPhases = (
+				2D4D47FD27C8D12EE2506ED9 /* [CP] Check Pods Manifest.lock */,
 				BFD6E9DA27E8C9D80093358B /* Sources */,
 				BFD6E9DB27E8C9D80093358B /* Frameworks */,
 				BFD6E9DC27E8C9D80093358B /* Resources */,
+				721976EA19FA4DA8DD591717 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -183,6 +201,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2D4D47FD27C8D12EE2506ED9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Easy Decision 2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		721976EA19FA4DA8DD591717 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BFD6E9DA27E8C9D80093358B /* Sources */ = {
@@ -338,6 +398,7 @@
 		};
 		BFD6E9F327E8C9D90093358B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 367F33E9FBE6A258F173A765 /* Pods-Easy Decision 2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -367,6 +428,7 @@
 		};
 		BFD6E9F427E8C9D90093358B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2B2AAF2317AA3B5FEAE3BB5 /* Pods-Easy Decision 2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
