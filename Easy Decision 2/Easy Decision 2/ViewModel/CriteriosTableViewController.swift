@@ -1,85 +1,82 @@
 //
-//  OpcoesTableViewController.swift
+//  CriteriosTableViewController.swift
 //  Easy Decision 2
 //
-//  Created by Angélica Andrade de Meira on 25/03/22.
+//  Created by Angélica Andrade de Meira on 27/03/22.
 //
 
 import UIKit
 import FirebaseFirestore
 
-class OpcoesTableViewController: UITableViewController {
+class CriteriosTableViewController: UITableViewController {
     
     var decisao: Decisao?
-    var listaDeOpcoes: [Opcao] = []
+    var listaDeCriterios: [Criterio] = []
     var firestore: Firestore!
-    var opcoesListener: ListenerRegistration!
-    var opcaoSelecionada: Opcao?
+    var criteriosListener: ListenerRegistration!
+    var criterioSelecionado: Criterio?
     
     // MARK: - View code
     
-    private lazy var botaoAdicionarOpcao: UIBarButtonItem = {
-        let view = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(vaiParaAdicionarOpcao))
+    private lazy var botaoAdicionarCriterio: UIBarButtonItem = {
+        let view = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(vaiParaAdicionarCriterio))
         return view
       }()
     
     private lazy var botaoContinuar: UIBarButtonItem = {
         let view = UIBarButtonItem()
         view.title = "Continuar"
-        view.target = self
-        view.action = #selector(vaiParaTelaDeCriterios)
+        view.action = #selector(vaiParaTelaDeAvaliacao)
         return view
       }()
     
-    @objc func vaiParaAdicionarOpcao() {
-        let viewDeDestino = AdicionaOpcaoViewController()
+    @objc func vaiParaAdicionarCriterio() {
+        let viewDeDestino = AdicionaCriterioViewController()
         viewDeDestino.decisao = self.decisao
         self.present(UINavigationController(rootViewController: viewDeDestino), animated: true)
     }
     
-    @objc func vaiParaTelaDeCriterios() {
-        let viewDestino = CriteriosTableViewController()
-        viewDestino.decisao = self.decisao
-        self.navigationController?.pushViewController(viewDestino, animated: true)
+    @objc func vaiParaTelaDeAvaliacao() {
+        
     }
     
     override func loadView() {
         super.loadView()
-        self.navigationItem.title = "Opções"
-        self.navigationItem.rightBarButtonItems = [botaoContinuar, botaoAdicionarOpcao]
+        self.navigationItem.title = "Critérios"
+        self.navigationItem.rightBarButtonItems = [botaoContinuar, botaoAdicionarCriterio]
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         firestore = Firestore.firestore()
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celulaOpcao")
+        self.tableView.register(CelulaCriterioTableViewCell.self, forCellReuseIdentifier: "celulaCriterio")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        addListenerRecuperarOpcoes()
-        self.opcaoSelecionada = nil
+        addListenerRecuperarCriterios()
+        self.criterioSelecionado = nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        opcoesListener.remove()
+        criteriosListener.remove()
     }
     
-    func addListenerRecuperarOpcoes() {
+    func addListenerRecuperarCriterios() {
         
         if let decisao = self.decisao {
             if let idDecisao = self.decisao?.id{
-                opcoesListener = firestore.collection("opcoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
+                criteriosListener = firestore.collection("criterios").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
                     if erro == nil {
-                        self.listaDeOpcoes.removeAll()
+                        self.listaDeCriterios.removeAll()
                         if let snapshot = querySnapshot {
                             for document in snapshot.documents {
                                 do {
                                     let dictionary = document.data()
-                                    let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                                    self.listaDeOpcoes.append(opcao)
+                                    let criterio = try Criterio(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                                    self.listaDeCriterios.append(criterio)
                                 } catch {
-                                    print("Error when trying to decode Opção: \(error)")
+                                    print("Error when trying to decode Critério: \(error)")
                                 }
                             }
                         }
@@ -92,10 +89,10 @@ class OpcoesTableViewController: UITableViewController {
         }
     }
     
-    func removerOpcao(indexPath: IndexPath){
-        let opcao = self.listaDeOpcoes[indexPath.row]
-        firestore.collection("opcoes").document(opcao.id!).delete()
-        self.listaDeOpcoes.remove(at: indexPath.row)
+    func removerCriterio(indexPath: IndexPath){
+        let criterio = self.listaDeCriterios[indexPath.row]
+        firestore.collection("criterios").document(criterio.id!).delete()
+        self.listaDeCriterios.remove(at: indexPath.row)
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
@@ -106,19 +103,19 @@ class OpcoesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.listaDeOpcoes.count
+        return self.listaDeCriterios.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let celula = tableView.dequeueReusableCell(withIdentifier: "celulaOpcao", for: indexPath)
+        let celula = tableView.dequeueReusableCell(withIdentifier: "celulaCriterio", for: indexPath) as! CelulaCriterioTableViewCell
         
         let indice = indexPath.row
-        let dadosOpcao = self.listaDeOpcoes[indice]
+        let dadosCriterio = self.listaDeCriterios[indice]
         
-        celula.accessoryType = .disclosureIndicator
-        celula.textLabel?.text = dadosOpcao.descricao
-        
+        celula.labelDescricao.text = dadosCriterio.descricao
+        celula.labelPeso.text = dadosCriterio.peso
+    
         return celula
     }
     
@@ -127,20 +124,27 @@ class OpcoesTableViewController: UITableViewController {
             
             UIContextualAction(style: .destructive, title: "Apagar", handler: { [weak self] (contextualAction, view, _) in
                 guard let self = self else { return }
-                self.removerOpcao(indexPath: indexPath)
+                self.removerCriterio(indexPath: indexPath)
                 tableView.reloadData()
             }),
             UIContextualAction(style: .normal, title: "Editar", handler: { [weak self] (contextualAction, view, _) in
                 guard let self = self else { return }
                 let indice = indexPath.row
-                self.opcaoSelecionada = self.listaDeOpcoes[indice]
-                let viewDeDestino = AdicionaOpcaoViewController()
-                viewDeDestino.opcao = self.opcaoSelecionada
+                self.criterioSelecionado = self.listaDeCriterios[indice]
+                let viewDeDestino = AdicionaCriterioViewController()
+                viewDeDestino.criterio = self.criterioSelecionado
                 viewDeDestino.decisao = self.decisao
                 self.present(UINavigationController(rootViewController: viewDeDestino), animated: true)
             })
         ]
         return UISwipeActionsConfiguration(actions: acoes)
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.criterioSelecionado = self.listaDeCriterios[indexPath.row]
+        let viewDestino = AdicionaCriterioViewController()
+        viewDestino.criterio = self.criterioSelecionado
+        viewDestino.decisao = self.decisao
+        self.present(UINavigationController(rootViewController: viewDestino), animated: true)
+    }
 }
