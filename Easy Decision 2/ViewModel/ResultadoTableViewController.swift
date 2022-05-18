@@ -40,7 +40,7 @@ class ResultadoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         firestore = Firestore.firestore()
-        self.tableView.register(CelulaTableViewCell.self, forCellReuseIdentifier: "celulaResultado")
+        self.tableView.register(CelulaCriterioTableViewCell.self, forCellReuseIdentifier: "celulaResultado")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,7 +90,7 @@ class ResultadoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaResultado", for: indexPath) as? CelulaTableViewCell
+        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaResultado", for: indexPath) as? CelulaCriterioTableViewCell
         else { return UITableViewCell() }
         let indice = indexPath.row
         //let dadosResultado = self.listaDeResultados[indice]

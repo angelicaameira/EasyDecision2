@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class CelulaTableViewCell: UITableViewCell {
+class CelulaCriterioTableViewCell: UITableViewCell {
     
     var firestore: Firestore!
     var atualizaDadosCriterio: (() -> ())?

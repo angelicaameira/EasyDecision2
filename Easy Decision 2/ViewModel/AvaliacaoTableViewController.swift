@@ -12,15 +12,15 @@ class AvaliacaoTableViewController: UITableViewController {
     
     var decisao: Decisao?
     var firestore: Firestore!
-    var criteriosListener: ListenerRegistration!
+    var criteriosListener: ListenerRegistration?
     var criterioSelecionado: Criterio?
-    var opcoesListener: ListenerRegistration!
+    var opcoesListener: ListenerRegistration?
     var opcaoSelecionada: Opcao?
     var listaDeOpcoes: [Opcao] = []
     var listaDeCriterios: [Criterio] = []
-    var listaDeAvaliacoes: [Avaliacao]? = []
     var avaliacaoSelecionada: Avaliacao?
-    var avaliacaoListener: ListenerRegistration!
+    var avaliacaoListener: ListenerRegistration?
+    var avaliacoesExistentes: [Avaliacao]? = []
     
     // MARK: - View code
     
@@ -48,7 +48,8 @@ class AvaliacaoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         firestore = Firestore.firestore()
-        self.tableView.register(CelulaTableViewCell.self, forCellReuseIdentifier: "celulaAvaliacao")
+        self.tableView.register(CelulaAvaliacaoTableViewCell.self, forCellReuseIdentifier: "celulaAvaliacao")
+        addListenerRecuperarAvaliacao()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,15 +59,11 @@ class AvaliacaoTableViewController: UITableViewController {
         addListenerRecuperarOpcoes()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        addListenerRecuperarAvaliacao()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        criteriosListener.remove()
-        opcoesListener.remove()
-        avaliacaoListener.remove()
+        criteriosListener?.remove()
+        opcoesListener?.remove()
+        avaliacaoListener?.remove()
     }
     
     func addListenerRecuperarAvaliacao() {
@@ -74,33 +71,26 @@ class AvaliacaoTableViewController: UITableViewController {
         else { return }
         guard let idDecisao = self.decisao?.id
         else { return }
-        for itemCriterio in self.listaDeCriterios {
-            guard let idCriterio = itemCriterio.id
-            else { return }
-            for itemOpcao in self.listaDeOpcoes {
-                guard let idOpcao = itemOpcao.id
+        
+        avaliacaoListener = firestore.collection("avaliacoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
+            
+            if erro == nil {
+                self.avaliacoesExistentes?.removeAll()
+                guard let snapshot = querySnapshot
                 else { return }
-                avaliacaoListener = firestore.collection("avaliacoes").whereField("idDecisao", isEqualTo: idDecisao).whereField("idCriterio", isEqualTo: idCriterio).whereField("idOpcao", isEqualTo: idOpcao).addSnapshotListener { [self] querySnapshot, erro in
+                for document in snapshot.documents {
                     
-                    if erro == nil {
-                        //self.listaDeAvaliacoes?.removeAll()
-                        guard let snapshot = querySnapshot
-                        else { return }
-                        for document in snapshot.documents {
-                            
-                            do {
-                                let dictionary = document.data()
-                                let avaliacao = try Avaliacao(id: document.documentID, idDecisao: idDecisao, idCriterio: idCriterio,idOpcao: idOpcao, dictionary: dictionary)
-                                self.listaDeAvaliacoes?.append(avaliacao)
-                            } catch {
-                                print("Error when trying to decode Avaliação: \(error)")
-                            }
-                        }
-                        self.tableView.reloadData()
-                    } else {
-                        return
+                    do {
+                        let dictionary = document.data()
+                        let avaliacao = try Avaliacao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                        self.avaliacoesExistentes?.append(avaliacao)
+                    } catch {
+                        print("Error when trying to decode Avaliação: \(error)")
                     }
                 }
+                self.tableView.reloadData()
+            } else {
+                return
             }
         }
     }
@@ -157,10 +147,6 @@ class AvaliacaoTableViewController: UITableViewController {
         }
     }
     
-    func criaAvalicao() {
-        
-    }
-    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -178,50 +164,53 @@ class AvaliacaoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaAvaliacao", for: indexPath) as? CelulaTableViewCell
+        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaAvaliacao", for: indexPath) as? CelulaAvaliacaoTableViewCell
         else { return UITableViewCell() }
+        guard let decisao = self.decisao
+        else { return celula }
         let dadosCriterio = self.listaDeCriterios[indexPath.row]
         let dadosOpcao = self.listaDeOpcoes[indexPath.section]
-        guard let idDecisao = self.decisao?.id
-        else { return celula }
-        celula.labelDescricao.text = dadosCriterio.descricao
-        guard let dadosAvaliacao = self.listaDeAvaliacoes
-        else { return celula }
         
-        if dadosAvaliacao.count == 0 {
-            celula.labelPeso.text = "1"
-            return celula
+        celula.labelDescricao.text = dadosCriterio.descricao
+        
+        guard let booleano = avaliacoesExistentes?.contains(where: { avaliacao in
+            return avaliacao.idCriterio == dadosCriterio.id && avaliacao.idOpcao == dadosOpcao.id
+        }) else { return celula }
+         
+        //Mostra avaliações existentes
+        if (booleano) {
+            guard let dadosAvaliacao = self.avaliacoesExistentes?[indexPath.row]
+            else { return celula }
+
+            guard let idAvaliacao = dadosAvaliacao.id
+            else { return celula }
             
-        } else {
-            
-            for itemAvaliacao in dadosAvaliacao {
+            celula.labelNota.text = dadosAvaliacao.valor
+            celula.atualizaDadosAvaliacao = { [unowned self] in
                 
-                if itemAvaliacao.idCriterio == dadosCriterio.id && itemAvaliacao.idOpcao == dadosOpcao.id && itemAvaliacao.idDecisao == idDecisao {
-                    celula.labelPeso.text = itemAvaliacao.valor
-                    return celula
-                } else {
-                    celula.labelPeso.text = "1"
-                    return celula
-                }
+                firestore.collection("avaliacoes").document(idAvaliacao).setData([
+                    "idDecisao" : decisao.id as Any,
+                    "idCriterio" : dadosCriterio.id as Any,
+                    "idOpcao" : dadosOpcao.id as Any,
+                    "valor" : celula.labelNota.text as Any
+                ])
             }
+            
+        //Salva novas avaliações
+        } else {
+            firestore.collection("avaliacoes").document().setData([
+                "idDecisao" : decisao.id as Any,
+                "idCriterio" : dadosCriterio.id as Any,
+                "idOpcao" : dadosOpcao.id as Any,
+                "valor" : celula.labelNota.text as Any
+            ])
         }
+        
+        addListenerRecuperarAvaliacao()
         return celula
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let viewDestino = EditaAvaliacaoViewController()
-        self.criterioSelecionado = self.listaDeCriterios[indexPath.row]
-        self.opcaoSelecionada = self.listaDeOpcoes[indexPath.section]
-        
-        if listaDeAvaliacoes?[indexPath.row] != nil {
-            self.avaliacaoSelecionada = self.listaDeAvaliacoes?[indexPath.row]
-        }
-        
-        viewDestino.opcao = self.opcaoSelecionada
-        viewDestino.criterio = self.criterioSelecionado
-        viewDestino.decisao = self.decisao
-        viewDestino.avaliacao = self.avaliacaoSelecionada
-        self.present(UINavigationController(rootViewController: viewDestino), animated: true)
     }
 }

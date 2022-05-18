@@ -52,7 +52,7 @@ class CriteriosTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         firestore = Firestore.firestore()
-        self.tableView.register(CelulaTableViewCell.self, forCellReuseIdentifier: "celulaCriterio")
+        self.tableView.register(CelulaCriterioTableViewCell.self, forCellReuseIdentifier: "celulaCriterio")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,7 +113,7 @@ class CriteriosTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaCriterio", for: indexPath) as? CelulaTableViewCell
+        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaCriterio", for: indexPath) as? CelulaCriterioTableViewCell
         else { return UITableViewCell() }
         let indice = indexPath.row
         let dadosCriterio = self.listaDeCriterios[indice]

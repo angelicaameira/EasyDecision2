@@ -16,11 +16,9 @@ struct Avaliacao: Codable {
     var idOpcao: String
     var valor: String
     
-    init(id: String, idDecisao: String, idCriterio: String, idOpcao: String, dictionary: [String: Any]) throws {
+    init(id: String, idDecisao: String, dictionary: [String: Any]) throws {
         self = try JSONDecoder().decode(Avaliacao.self, from: JSONSerialization.data(withJSONObject: dictionary))
         self.id = id
         self.idDecisao = idDecisao
-        self.idCriterio = idCriterio
-        self.idOpcao = idOpcao
     }
 }

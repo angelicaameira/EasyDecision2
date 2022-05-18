@@ -114,7 +114,6 @@ class OpcoesTableViewController: UITableViewController {
         let indice = indexPath.row
         let dadosOpcao = self.listaDeOpcoes[indice]
         
-        celula.accessoryType = .disclosureIndicator
         celula.textLabel?.text = dadosOpcao.descricao
         
         return celula
