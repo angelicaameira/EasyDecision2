@@ -20,7 +20,7 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
         view.title = "Feito"
         view.action = #selector(feito)
         return view
-      }()
+    }()
     
     private lazy var campoDescricao: UITextField = {
         let view = UITextField()
@@ -29,65 +29,60 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
         view.placeholder = "Insira a descrição da decisão"
         view.returnKeyType = .done
         return view
-      }()
+    }()
     
     override func loadView() {
         super.loadView()
-        
         self.view.backgroundColor = .white
         self.navigationItem.rightBarButtonItems = [botaoFeito]
         self.view.addSubview(campoDescricao)
         
         if decisao != nil {
             self.title = "Editar decisão"
-        }else{
+        } else {
             self.title = "Adicionar Decisão"
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         firestore = Firestore.firestore()
         setup()
         
         campoDescricao.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60).isActive = true
-        
         campoDescricao.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        
         campoDescricao.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-        
         campoDescricao.delegate = self
     }
     
-    func salvarNovaDecisao(){
+    func salvarNovaDecisao() {
         firestore.collection("decisoes").document().setData([
             "descricao" : campoDescricao.text as Any
         ])
     }
     
-    func atualizarDecisao(){
-        let id = decisao?.id
+    func atualizarDecisao() {
+        guard let id = decisao?.id
+        else { return }
         
-        firestore.collection("decisoes").document(id!).setData([
+        firestore.collection("decisoes").document(id).setData([
             "descricao" : campoDescricao.text as Any
         ])
     }
     
     @objc func feito() {
-        
-        if decisao == nil{
+        if decisao == nil {
             salvarNovaDecisao()
-        }else{
+        } else {
             atualizarDecisao()
         }
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     func setup() {
-        if let decisao = self.decisao{
+        guard let decisao = self.decisao
+        else { return }
             campoDescricao.text = (decisao.descricao)
-        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -95,4 +90,3 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 }
-

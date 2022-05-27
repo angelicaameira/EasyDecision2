@@ -10,9 +10,9 @@ import FirebaseFirestore
 
 class DecisoesTableViewController: UITableViewController {
     
-    var listaDeDecisoes: [Decisao] = []
+    var listaDeDecisoes: [Decisao]? = []
     var firestore: Firestore!
-    var decisoesListener: ListenerRegistration!
+    var decisoesListener: ListenerRegistration?
     var decisaoSelecionada: Decisao?
     
     // MARK: - View code
@@ -20,24 +20,21 @@ class DecisoesTableViewController: UITableViewController {
     private lazy var botaoAdicionarDecisao: UIBarButtonItem = {
         let view = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(vaiParaAdicionarDecisao))
         return view
-      }()
+    }()
     
-    @objc func vaiParaAdicionarDecisao(){
+    @objc func vaiParaAdicionarDecisao() {
         self.present(UINavigationController(rootViewController: AdicionaDecisaoViewController()), animated: true)
     }
     
     override func loadView() {
         super.loadView()
-        
         self.navigationItem.title = "Decisões"
         self.navigationItem.rightBarButtonItems = [botaoAdicionarDecisao]
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         firestore = Firestore.firestore()
-        
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celulaDecisao")
     }
     
@@ -48,23 +45,23 @@ class DecisoesTableViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        decisoesListener.remove()
+        decisoesListener?.remove()
     }
     
     func addListenerRecuperarDecisoes() {
         decisoesListener = firestore.collection("decisoes").addSnapshotListener({ querySnapshot, erro in
             
             if erro == nil {
-                self.listaDeDecisoes.removeAll()
+                self.listaDeDecisoes?.removeAll()
                 
                 if let snapshot = querySnapshot {
                     for document in snapshot.documents {
                         do {
                             let dictionary = document.data()
                             let decisao = try Decisao(id: document.documentID, dictionary: dictionary)
-                            self.listaDeDecisoes.append(decisao)
+                            self.listaDeDecisoes?.append(decisao)
                         } catch {
-                          print("Error when trying to decode Decisão: \(error)")
+                            print("Error when trying to decode Decisão: \(error)")
                         }
                     }
                     self.tableView.reloadData()
@@ -73,10 +70,14 @@ class DecisoesTableViewController: UITableViewController {
         })
     }
     
-    func removerDecisao(indexPath: IndexPath){
-        let decisao = self.listaDeDecisoes[indexPath.row]
-        firestore.collection("decisoes").document(decisao.id!).delete()
-        self.listaDeDecisoes.remove(at: indexPath.row)
+    func removerDecisao(indexPath: IndexPath) {
+        guard
+            let decisao = self.listaDeDecisoes?[indexPath.row],
+            let idDecisao = decisao.id
+        else { return }
+        
+        firestore.collection("decisoes").document(idDecisao).delete()
+        self.listaDeDecisoes?.remove(at: indexPath.row)
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
@@ -87,15 +88,15 @@ class DecisoesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listaDeDecisoes.count
+        return listaDeDecisoes?.count ?? 0
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celula = tableView.dequeueReusableCell(withIdentifier: "celulaDecisao", for: indexPath)
         
         let indice = indexPath.row
-        let dadosDecisao = self.listaDeDecisoes[indice]
+        guard let dadosDecisao = self.listaDeDecisoes?[indice]
+        else { return celula }
         
         celula.accessoryType = .disclosureIndicator
         celula.textLabel?.text = dadosDecisao.descricao
@@ -105,17 +106,20 @@ class DecisoesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let acoes = [
-            
             UIContextualAction(style: .destructive, title: "Apagar", handler: { [weak self] (contextualAction, view, _) in
-                guard let self = self else { return }
+                guard let self = self
+                else { return }
+                
                 self.removerDecisao(indexPath: indexPath)
                 tableView.reloadData()
             }),
             UIContextualAction(style: .normal, title: "Editar", handler: { [weak self] (contextualAction, view, _) in
-                guard let self = self else { return }
+                guard let self = self
+                else { return }
+                
                 let indice = indexPath.row
-                self.decisaoSelecionada = self.listaDeDecisoes[indice]
                 let viewDeDestino = AdicionaDecisaoViewController()
+                self.decisaoSelecionada = self.listaDeDecisoes?[indice]
                 viewDeDestino.decisao = self.decisaoSelecionada
                 
                 self.present(UINavigationController(rootViewController: viewDeDestino), animated: true)
