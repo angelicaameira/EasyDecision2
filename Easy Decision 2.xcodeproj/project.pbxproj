@@ -12,6 +12,7 @@
 		BF5F4AD227EE174800F8D2ED /* Opcao.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD127EE174800F8D2ED /* Opcao.swift */; };
 		BF5F4AD427EE17D400F8D2ED /* OpcoesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */; };
 		BF5F4AD627EE2AE800F8D2ED /* AdicionaOpcaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */; };
+		BF68068528358B9A002CC289 /* CelulaResultadoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68068428358B9A002CC289 /* CelulaResultadoTableViewCell.swift */; };
 		BF7DBD4C27F744790026CA72 /* ResultadoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DBD4B27F744790026CA72 /* ResultadoTableViewController.swift */; };
 		BF7DBD4E27F745750026CA72 /* Resultado.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DBD4D27F745750026CA72 /* Resultado.swift */; };
 		BF8B591D27E91A2B0051CCAD /* DecisoesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */; };
@@ -39,6 +40,7 @@
 		BF5F4AD127EE174800F8D2ED /* Opcao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opcao.swift; sourceTree = "<group>"; };
 		BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcoesTableViewController.swift; sourceTree = "<group>"; };
 		BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaOpcaoViewController.swift; sourceTree = "<group>"; };
+		BF68068428358B9A002CC289 /* CelulaResultadoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaResultadoTableViewCell.swift; sourceTree = "<group>"; };
 		BF7DBD4B27F744790026CA72 /* ResultadoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultadoTableViewController.swift; sourceTree = "<group>"; };
 		BF7DBD4D27F745750026CA72 /* Resultado.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resultado.swift; sourceTree = "<group>"; };
 		BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisoesTableViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				BFCA828727F0EBD200985550 /* CelulaCriterioTableViewCell.swift */,
 				BF076442282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift */,
+				BF68068428358B9A002CC289 /* CelulaResultadoTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				BFCA828127F0E2CA00985550 /* Criterio.swift in Sources */,
 				BFCA828527F0E88E00985550 /* AdicionaCriterioViewController.swift in Sources */,
 				BFCA828A27F2449C00985550 /* AvaliacaoTableViewController.swift in Sources */,
+				BF68068528358B9A002CC289 /* CelulaResultadoTableViewCell.swift in Sources */,
 				BFD6E9E427E8C9D80093358B /* SceneDelegate.swift in Sources */,
 				BF5F4AD627EE2AE800F8D2ED /* AdicionaOpcaoViewController.swift in Sources */,
 			);

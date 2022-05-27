@@ -10,12 +10,14 @@ import FirebaseFirestore
 
 class ResultadoTableViewController: UITableViewController {
     
-    var decisao: Decisao?
-    var listaDeResultados: [Resultado] = []
     var firestore: Firestore!
-    var avaliacao: Avaliacao?
-    var opcoesListener: ListenerRegistration!
-    var listaDeOpcoes: [Opcao] = []
+    var decisao: Decisao?
+    //var avaliacao: Avaliacao?
+    var listaDeOpcoes: [Opcao]? = []
+    var listaDeAvaliacoes: [Avaliacao]? = []
+    var listaDeCriterios: [Criterio]? = []
+    var listaDeResultados: [Resultado]? = []
+    var resultadoListener: ListenerRegistration!
     
     // MARK: - View code
     
@@ -35,41 +37,44 @@ class ResultadoTableViewController: UITableViewController {
         super.loadView()
         self.navigationItem.title = "Resultado"
         self.navigationItem.rightBarButtonItems = [botaoConcluir]
+        firestore = Firestore.firestore()
+        addListenerRecuperarResultados()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        firestore = Firestore.firestore()
-        self.tableView.register(CelulaCriterioTableViewCell.self, forCellReuseIdentifier: "celulaResultado")
+        
+        self.tableView.register(CelulaResultadoTableViewCell.self, forCellReuseIdentifier: "celulaResultado")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        addListenerRecuperarOpcoes()
+        if listaDeResultados?.count == 0 {
+            criaResultado()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        opcoesListener.remove()
+        resultadoListener.remove()
     }
     
-    func addListenerRecuperarOpcoes() {
+    func addListenerRecuperarResultados() {
         guard self.decisao != nil
         else { return }
         guard let idDecisao = self.decisao?.id
         else { return }
-        opcoesListener = firestore.collection("opcoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
+        
+        resultadoListener = firestore.collection("resultado").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
             if erro == nil {
-                self.listaDeOpcoes.removeAll()
+                self.listaDeResultados?.removeAll()
                 guard let snapshot = querySnapshot
                 else { return }
                 for document in snapshot.documents {
-                    
                     do {
                         let dictionary = document.data()
-                        let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.listaDeOpcoes.append(opcao)
+                        let resultado = try Resultado(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                        self.listaDeResultados?.append(resultado)
                     } catch {
-                        print("Error when trying to decode Opção: \(error)")
+                        print("Error when trying to decode Resultado: \(error)")
                     }
                 }
                 self.tableView.reloadData()
@@ -79,6 +84,61 @@ class ResultadoTableViewController: UITableViewController {
         }
     }
     
+    func criaResultado() {
+        guard
+            let decisao = self.decisao,
+            let idDecisao = decisao.id,
+            let listaDeAvaliacoes = listaDeAvaliacoes,
+            let listaDeCriterios = listaDeCriterios,
+            let listaDeOpcoes = listaDeOpcoes
+        else { return }
+        
+        for dadosOpcao in listaDeOpcoes {
+            
+            let avaliacoesDaOpcao = listaDeAvaliacoes.filter({ avaliacao in
+                return avaliacao.idOpcao == dadosOpcao.id
+            })
+            
+            var dividendo = 0.0
+            var divisor = 0.0
+            
+            for dadosCriterio in listaDeCriterios {
+                
+                for dadosAvaliacao in avaliacoesDaOpcao {
+                    
+                    if dadosCriterio.id == dadosAvaliacao.idCriterio {
+                        
+                        guard let valorAvaliacao = Int(dadosAvaliacao.valor)
+                        else { return }
+                        guard let pesoCriterio = Int(dadosCriterio.peso)
+                        else { return }
+                        
+                        dividendo = dividendo + Double((valorAvaliacao * pesoCriterio))
+                        divisor = divisor + Double((5 * pesoCriterio))
+                    }
+                } //  if dadosCriterio.id == dadosAvaliacao.idCriterio && dadosOpcao.id == dadosAvaliacao.idOpcao && dadosAvaliacao.idDecisao == idDecisao
+            }
+            
+            let percentualDaOpcao = (dividendo/divisor) * 100
+            
+            firestore.collection("resultado").document().setData([
+                "idDecisao" : idDecisao as Any,
+                "idOpcao" : dadosOpcao.id as Any,
+                "percentual" : "\(percentualDaOpcao)%"
+            ])
+        }
+        
+       
+        
+        //var percentualDaOpcao = (avaliação1.nota * critério1.peso + avaliaçãoN.nota * critérioN.peso) / (5 * critério1.peso + 5 * critérioN.peso)
+        
+        
+//        guard let comparacao = listaDeResultados?.contains(where: { resultado in
+//            return resultado.idOpcao == resultado.idOpcao
+//        }) else { return }
+        
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -86,17 +146,20 @@ class ResultadoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.listaDeOpcoes.count
+        return self.listaDeOpcoes?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaResultado", for: indexPath) as? CelulaCriterioTableViewCell
+        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaResultado", for: indexPath) as? CelulaResultadoTableViewCell
         else { return UITableViewCell() }
+        guard self.decisao != nil
+        else { return celula }
         let indice = indexPath.row
-        //let dadosResultado = self.listaDeResultados[indice]
-        let dadosOpcao = self.listaDeOpcoes[indice]
-        celula.labelDescricao.text = dadosOpcao.descricao
-        // celula.labelPeso.text = dadosResultado.percentual
+        let dadosResultado = self.listaDeResultados?[indice]
+        let dadosOpcao = self.listaDeOpcoes?[indice]
+        
+        celula.labelDescricao.text = dadosOpcao?.descricao
+        celula.labelPercentual.text = dadosResultado?.percentual
         
         return celula
     }

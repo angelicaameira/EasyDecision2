@@ -35,7 +35,9 @@ class AvaliacaoTableViewController: UITableViewController {
     @objc func vaiParaTelaDeResultados() {
         let viewDestino = ResultadoTableViewController()
         viewDestino.decisao = self.decisao
-        //  viewDestino.avaliacao =
+        viewDestino.listaDeOpcoes = self.listaDeOpcoes
+        viewDestino.listaDeCriterios = self.listaDeCriterios
+        viewDestino.listaDeAvaliacoes = self.avaliacoesExistentes
         self.navigationController?.pushViewController(viewDestino, animated: true)
     }
     
@@ -198,7 +200,7 @@ class AvaliacaoTableViewController: UITableViewController {
             
         //Salva novas avaliações
         } else {
-            firestore.collection("avaliacoes").document().setData([
+             firestore.collection("avaliacoes").document().setData([
                 "idDecisao" : decisao.id as Any,
                 "idCriterio" : dadosCriterio.id as Any,
                 "idOpcao" : dadosOpcao.id as Any,
@@ -206,7 +208,6 @@ class AvaliacaoTableViewController: UITableViewController {
             ])
         }
         
-        addListenerRecuperarAvaliacao()
         return celula
     }
     
