@@ -69,9 +69,9 @@ class AvaliacaoTableViewController: UITableViewController {
     }
     
     func addListenerRecuperarAvaliacao() {
-        guard self.decisao != nil
-        else { return }
-        guard let idDecisao = self.decisao?.id
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
         
         avaliacaoListener = firestore.collection("avaliacoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
@@ -98,10 +98,11 @@ class AvaliacaoTableViewController: UITableViewController {
     }
     
     func addListenerRecuperarCriterios() {
-        guard self.decisao != nil
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
-        guard let idDecisao = self.decisao?.id
-        else { return }
+
         criteriosListener = firestore.collection("criterios").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
             if erro == nil {
                 self.listaDeCriterios.removeAll()
@@ -124,10 +125,11 @@ class AvaliacaoTableViewController: UITableViewController {
     }
     
     func addListenerRecuperarOpcoes() {
-        guard self.decisao != nil
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
-        guard let idDecisao = self.decisao?.id
-        else { return }
+    
         opcoesListener = firestore.collection("opcoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
             if erro == nil {
                 self.listaDeOpcoes.removeAll()
@@ -166,10 +168,10 @@ class AvaliacaoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaAvaliacao", for: indexPath) as? CelulaAvaliacaoTableViewCell
+        guard
+            let celula = tableView.dequeueReusableCell(withIdentifier: "celulaAvaliacao", for: indexPath) as? CelulaAvaliacaoTableViewCell,
+            let decisao = self.decisao
         else { return UITableViewCell() }
-        guard let decisao = self.decisao
-        else { return celula }
         let dadosCriterio = self.listaDeCriterios[indexPath.row]
         let dadosOpcao = self.listaDeOpcoes[indexPath.section]
         
@@ -181,10 +183,9 @@ class AvaliacaoTableViewController: UITableViewController {
          
         //Mostra avaliações existentes
         if (booleano) {
-            guard let dadosAvaliacao = self.avaliacoesExistentes?[indexPath.row]
-            else { return celula }
-
-            guard let idAvaliacao = dadosAvaliacao.id
+            guard
+                let dadosAvaliacao = self.avaliacoesExistentes?[indexPath.row],
+                let idAvaliacao = dadosAvaliacao.id
             else { return celula }
             
             celula.labelNota.text = dadosAvaliacao.valor

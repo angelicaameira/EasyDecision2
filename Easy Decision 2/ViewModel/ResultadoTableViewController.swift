@@ -12,7 +12,6 @@ class ResultadoTableViewController: UITableViewController {
     
     var firestore: Firestore!
     var decisao: Decisao?
-    //var avaliacao: Avaliacao?
     var listaDeOpcoes: [Opcao]? = []
     var listaDeAvaliacoes: [Avaliacao]? = []
     var listaDeCriterios: [Criterio]? = []
@@ -43,7 +42,6 @@ class ResultadoTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.tableView.register(CelulaResultadoTableViewCell.self, forCellReuseIdentifier: "celulaResultado")
     }
     
@@ -58,9 +56,9 @@ class ResultadoTableViewController: UITableViewController {
     }
     
     func addListenerRecuperarResultados() {
-        guard self.decisao != nil
-        else { return }
-        guard let idDecisao = self.decisao?.id
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
         
         resultadoListener = firestore.collection("resultado").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
@@ -108,9 +106,9 @@ class ResultadoTableViewController: UITableViewController {
                     
                     if dadosCriterio.id == dadosAvaliacao.idCriterio {
                         
-                        guard let valorAvaliacao = Int(dadosAvaliacao.valor)
-                        else { return }
-                        guard let pesoCriterio = Int(dadosCriterio.peso)
+                        guard
+                            let valorAvaliacao = Int(dadosAvaliacao.valor),
+                            let pesoCriterio = Int(dadosCriterio.peso)
                         else { return }
                         
                         dividendo = dividendo + Double((valorAvaliacao * pesoCriterio))
@@ -150,10 +148,9 @@ class ResultadoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaResultado", for: indexPath) as? CelulaResultadoTableViewCell
+        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaResultado", for: indexPath) as? CelulaResultadoTableViewCell,
+              self.decisao != nil
         else { return UITableViewCell() }
-        guard self.decisao != nil
-        else { return celula }
         let indice = indexPath.row
         let dadosResultado = self.listaDeResultados?[indice]
         let dadosOpcao = self.listaDeOpcoes?[indice]
