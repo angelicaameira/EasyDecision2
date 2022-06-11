@@ -39,6 +39,7 @@ class CriteriosTableViewController: UITableViewController {
     
     @objc func vaiParaTelaDeAvaliacao() {
         let viewDestino = AvaliacaoTableViewController()
+        viewDestino.listaDeCriterios = self.listaDeCriterios
         viewDestino.decisao = self.decisao
         self.navigationController?.pushViewController(viewDestino, animated: true)
     }

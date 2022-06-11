@@ -20,5 +20,4 @@ struct Criterio: Codable {
         self.id = id
         self.idDecisao = idDecisao
     }
-    
 }

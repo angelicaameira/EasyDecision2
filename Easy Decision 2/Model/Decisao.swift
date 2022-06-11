@@ -17,5 +17,4 @@ struct Decisao: Codable {
         self = try JSONDecoder().decode(Decisao.self, from: JSONSerialization.data(withJSONObject: dictionary))
         self.id = id
     }
-    
 }

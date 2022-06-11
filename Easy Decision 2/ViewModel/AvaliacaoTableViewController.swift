@@ -12,13 +12,9 @@ class AvaliacaoTableViewController: UITableViewController {
     
     var decisao: Decisao?
     var firestore: Firestore!
-    var criteriosListener: ListenerRegistration?
-    var criterioSelecionado: Criterio?
     var opcoesListener: ListenerRegistration?
-    var opcaoSelecionada: Opcao?
     var listaDeOpcoes: [Opcao] = []
     var listaDeCriterios: [Criterio] = []
-    var avaliacaoSelecionada: Avaliacao?
     var avaliacaoListener: ListenerRegistration?
     var avaliacoesExistentes: [Avaliacao]? = []
     
@@ -56,14 +52,11 @@ class AvaliacaoTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.criterioSelecionado = nil
-        addListenerRecuperarCriterios()
         addListenerRecuperarOpcoes()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        criteriosListener?.remove()
         opcoesListener?.remove()
         avaliacaoListener?.remove()
     }
@@ -97,39 +90,12 @@ class AvaliacaoTableViewController: UITableViewController {
         }
     }
     
-    func addListenerRecuperarCriterios() {
-        guard
-            self.decisao != nil,
-            let idDecisao = self.decisao?.id
-        else { return }
-
-        criteriosListener = firestore.collection("criterios").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
-            if erro == nil {
-                self.listaDeCriterios.removeAll()
-                guard let snapshot = querySnapshot
-                else { return }
-                for document in snapshot.documents {
-                    do {
-                        let dictionary = document.data()
-                        let criterio = try Criterio(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.listaDeCriterios.append(criterio)
-                    } catch {
-                        print("Error when trying to decode Critério: \(error)")
-                    }
-                }
-                self.tableView.reloadData()
-            } else {
-                return
-            }
-        }
-    }
-    
     func addListenerRecuperarOpcoes() {
         guard
             self.decisao != nil,
             let idDecisao = self.decisao?.id
         else { return }
-    
+        
         opcoesListener = firestore.collection("opcoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
             if erro == nil {
                 self.listaDeOpcoes.removeAll()
@@ -180,7 +146,7 @@ class AvaliacaoTableViewController: UITableViewController {
         guard let booleano = avaliacoesExistentes?.contains(where: { avaliacao in
             return avaliacao.idCriterio == dadosCriterio.id && avaliacao.idOpcao == dadosOpcao.id
         }) else { return celula }
-         
+        
         //Mostra avaliações existentes
         if (booleano) {
             guard
@@ -199,9 +165,9 @@ class AvaliacaoTableViewController: UITableViewController {
                 ])
             }
             
-        //Salva novas avaliações
+            //Salva novas avaliações
         } else {
-             firestore.collection("avaliacoes").document().setData([
+            firestore.collection("avaliacoes").document().setData([
                 "idDecisao" : decisao.id as Any,
                 "idCriterio" : dadosCriterio.id as Any,
                 "idOpcao" : dadosOpcao.id as Any,

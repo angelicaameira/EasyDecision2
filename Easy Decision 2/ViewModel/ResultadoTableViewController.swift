@@ -7,16 +7,15 @@
 
 import UIKit
 import FirebaseFirestore
+import Foundation
 
 class ResultadoTableViewController: UITableViewController {
     
-    var firestore: Firestore!
     var decisao: Decisao?
     var listaDeOpcoes: [Opcao]? = []
     var listaDeAvaliacoes: [Avaliacao]? = []
     var listaDeCriterios: [Criterio]? = []
     var listaDeResultados: [Resultado]? = []
-    var resultadoListener: ListenerRegistration!
     
     // MARK: - View code
     
@@ -36,8 +35,6 @@ class ResultadoTableViewController: UITableViewController {
         super.loadView()
         self.navigationItem.title = "Resultado"
         self.navigationItem.rightBarButtonItems = [botaoConcluir]
-        firestore = Firestore.firestore()
-        addListenerRecuperarResultados()
     }
     
     override func viewDidLoad() {
@@ -49,37 +46,7 @@ class ResultadoTableViewController: UITableViewController {
         if listaDeResultados?.count == 0 {
             criaResultado()
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        resultadoListener.remove()
-    }
-    
-    func addListenerRecuperarResultados() {
-        guard
-            self.decisao != nil,
-            let idDecisao = self.decisao?.id
-        else { return }
-        
-        resultadoListener = firestore.collection("resultado").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
-            if erro == nil {
-                self.listaDeResultados?.removeAll()
-                guard let snapshot = querySnapshot
-                else { return }
-                for document in snapshot.documents {
-                    do {
-                        let dictionary = document.data()
-                        let resultado = try Resultado(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.listaDeResultados?.append(resultado)
-                    } catch {
-                        print("Error when trying to decode Resultado: \(error)")
-                    }
-                }
-                self.tableView.reloadData()
-            } else {
-                return
-            }
-        }
+        ordenaListaDeResultadosPorPercentual()
     }
     
     func criaResultado() {
@@ -114,27 +81,26 @@ class ResultadoTableViewController: UITableViewController {
                         dividendo = dividendo + Double((valorAvaliacao * pesoCriterio))
                         divisor = divisor + Double((5 * pesoCriterio))
                     }
-                } //  if dadosCriterio.id == dadosAvaliacao.idCriterio && dadosOpcao.id == dadosAvaliacao.idOpcao && dadosAvaliacao.idDecisao == idDecisao
+                }
             }
             
-            let percentualDaOpcao = (dividendo/divisor) * 100
+            let percentualDaOpcao = NumberFormatter.localizedString(from: NSNumber(value: (dividendo/divisor)), number: .percent)
+            guard let idOpcao = dadosOpcao.id
+            else { return }
             
-            firestore.collection("resultado").document().setData([
-                "idDecisao" : idDecisao as Any,
-                "idOpcao" : dadosOpcao.id as Any,
-                "percentual" : "\(percentualDaOpcao)%"
-            ])
+            do {
+                let resultado = try Resultado(idDecisao: idDecisao, idOpcao: idOpcao, percentual: "\(percentualDaOpcao)")
+                self.listaDeResultados?.append(resultado)
+            } catch {
+                print("Error when trying to decode Resultado: \(error)")
+            }
         }
-        
-       
-        
-        //var percentualDaOpcao = (avaliação1.nota * critério1.peso + avaliaçãoN.nota * critérioN.peso) / (5 * critério1.peso + 5 * critérioN.peso)
-        
-        
-//        guard let comparacao = listaDeResultados?.contains(where: { resultado in
-//            return resultado.idOpcao == resultado.idOpcao
-//        }) else { return }
-        
+    }
+    
+    func ordenaListaDeResultadosPorPercentual() {
+        listaDeResultados?.sort(by: { resultadoEsquerda, resultadoDireita in
+            return resultadoEsquerda.percentual > resultadoDireita.percentual
+        })
     }
     
     // MARK: - Table view data source

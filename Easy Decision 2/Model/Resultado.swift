@@ -10,14 +10,22 @@ import UIKit
 import FirebaseFirestore
 
 struct Resultado: Codable {
-    var id: String?
+    var id: Int64
     var idDecisao: String
     var idOpcao: String
     var percentual: String
     
-    init(id: String, idDecisao: String, dictionary: [String: Any]) throws {
-        self = try JSONDecoder().decode(Resultado.self, from: JSONSerialization.data(withJSONObject: dictionary))
+    init(idDecisao: String, idOpcao: String, percentual: String) throws {
+        self.id = -1
+        self.idDecisao = idDecisao
+        self.idOpcao = idOpcao
+        self.percentual = percentual
+    }
+    
+    private init(id: Int64, idDecisao: String, idOpcao: String, percentual: String) throws {
         self.id = id
         self.idDecisao = idDecisao
+        self.idOpcao = idOpcao
+        self.percentual = percentual
     }
 }
