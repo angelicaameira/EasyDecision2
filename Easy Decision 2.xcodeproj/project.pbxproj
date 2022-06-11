@@ -18,7 +18,6 @@
 		BF8B591D27E91A2B0051CCAD /* DecisoesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */; };
 		BF8B592127E9237A0051CCAD /* AdicionaDecisaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B592027E9237A0051CCAD /* AdicionaDecisaoViewController.swift */; };
 		BF8C63DB27E9143E0051926E /* Decisao.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C63DA27E9143E0051926E /* Decisao.swift */; };
-		BF9650D8284D616400A76143 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF9650D7284D616400A76143 /* GoogleService-Info.plist */; };
 		BFCA828127F0E2CA00985550 /* Criterio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828027F0E2CA00985550 /* Criterio.swift */; };
 		BFCA828327F0E53A00985550 /* CriteriosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828227F0E53A00985550 /* CriteriosTableViewController.swift */; };
 		BFCA828527F0E88E00985550 /* AdicionaCriterioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828427F0E88E00985550 /* AdicionaCriterioViewController.swift */; };
@@ -30,6 +29,7 @@
 		BFD6E9E927E8C9D80093358B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFD6E9E727E8C9D80093358B /* Main.storyboard */; };
 		BFD6E9EB27E8C9D90093358B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFD6E9EA27E8C9D90093358B /* Assets.xcassets */; };
 		BFD6E9EE27E8C9D90093358B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFD6E9EC27E8C9D90093358B /* LaunchScreen.storyboard */; };
+		BFFE32D12854FE69007B9151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFFE32D02854FE69007B9151 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +46,6 @@
 		BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisoesTableViewController.swift; sourceTree = "<group>"; };
 		BF8B592027E9237A0051CCAD /* AdicionaDecisaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaDecisaoViewController.swift; sourceTree = "<group>"; };
 		BF8C63DA27E9143E0051926E /* Decisao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decisao.swift; sourceTree = "<group>"; };
-		BF9650D7284D616400A76143 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BFCA828027F0E2CA00985550 /* Criterio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Criterio.swift; sourceTree = "<group>"; };
 		BFCA828227F0E53A00985550 /* CriteriosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriteriosTableViewController.swift; sourceTree = "<group>"; };
 		BFCA828427F0E88E00985550 /* AdicionaCriterioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaCriterioViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +59,7 @@
 		BFD6E9EA27E8C9D90093358B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BFD6E9ED27E8C9D90093358B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BFD6E9EF27E8C9D90093358B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFFE32D02854FE69007B9151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +149,7 @@
 				BFD6E9EA27E8C9D90093358B /* Assets.xcassets */,
 				BFD6E9EC27E8C9D90093358B /* LaunchScreen.storyboard */,
 				BFD6E9EF27E8C9D90093358B /* Info.plist */,
-				BF9650D7284D616400A76143 /* GoogleService-Info.plist */,
+				BFFE32D02854FE69007B9151 /* GoogleService-Info.plist */,
 			);
 			path = "Easy Decision 2";
 			sourceTree = "<group>";
@@ -224,9 +224,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFD6E9EE27E8C9D90093358B /* LaunchScreen.storyboard in Resources */,
+				BFFE32D12854FE69007B9151 /* GoogleService-Info.plist in Resources */,
 				BFD6E9EB27E8C9D90093358B /* Assets.xcassets in Resources */,
 				BFD6E9E927E8C9D80093358B /* Main.storyboard in Resources */,
-				BF9650D8284D616400A76143 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
