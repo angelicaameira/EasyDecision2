@@ -78,14 +78,14 @@ class AdicionaCriterioViewController: UIViewController, UITextFieldDelegate {
         firestore = Firestore.firestore()
         setup()
         
-        campoDescricao.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60).isActive = true
-        campoDescricao.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        campoDescricao.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        campoDescricao.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
+        campoDescricao.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -15).isActive = true
+        campoDescricao.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 15).isActive = true
         campoPeso.topAnchor.constraint(equalTo: self.campoDescricao.bottomAnchor, constant: 10).isActive = true
-        campoPeso.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        campoPeso.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 15).isActive = true
         campoPeso.widthAnchor.constraint(equalToConstant: 230).isActive = true
         botaoStepper.topAnchor.constraint(equalTo: self.campoDescricao.bottomAnchor, constant: 10).isActive = true
-        botaoStepper.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+        botaoStepper.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -15).isActive = true
         
         campoDescricao.delegate = self
         guard let campoPeso = campoPeso.text

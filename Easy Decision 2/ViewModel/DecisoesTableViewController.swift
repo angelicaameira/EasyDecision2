@@ -67,11 +67,18 @@ class DecisoesTableViewController: UITableViewController {
                             print("Error when trying to decode Decisão: \(error)")
                         }
                     }
+                    self.ordenaListaDeDecisoesPorOrdemAlfabetica()
                     self.tableView.reloadData()
                 }
             } else {
                 return
             }
+        })
+    }
+    
+    func ordenaListaDeDecisoesPorOrdemAlfabetica() {
+        listaDeDecisoes.sort(by: { decisaoEsquerda, decisaoDireita in
+            return decisaoEsquerda.descricao < decisaoDireita.descricao
         })
     }
     
