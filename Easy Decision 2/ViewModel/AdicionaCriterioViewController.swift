@@ -98,9 +98,9 @@ class AdicionaCriterioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func salvarNovoCriterio() {
-        guard let decisao = decisao
-        else { return }
-        guard let idDecisao = decisao.id
+        guard
+            let decisao = decisao,
+            let idDecisao = decisao.id
         else { return }
         firestore.collection("criterios").document().setData([
             "idDecisao" : idDecisao as Any,
@@ -110,11 +110,10 @@ class AdicionaCriterioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func atualizarCriterio(){
-        guard let decisao = decisao
-        else { return }
-        guard let idDecisao = decisao.id
-        else { return }
-        guard let id = criterio?.id
+        guard
+            let decisao = decisao,
+            let idDecisao = decisao.id,
+            let id = criterio?.id
         else { return }
         firestore.collection("criterios").document(id).setData([
             "idDecisao" : idDecisao as Any,

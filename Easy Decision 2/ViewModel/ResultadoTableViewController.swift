@@ -16,6 +16,7 @@ class ResultadoTableViewController: UITableViewController {
     var listaDeAvaliacoes: [Avaliacao]? = []
     var listaDeCriterios: [Criterio]? = []
     var listaDeResultados: [Resultado]? = []
+    var alertaRecuperarResultado = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de resultado", preferredStyle: .alert)
     
     // MARK: - View code
     
@@ -91,8 +92,9 @@ class ResultadoTableViewController: UITableViewController {
             do {
                 let resultado = try Resultado(idDecisao: idDecisao, idOpcao: idOpcao, percentual: "\(percentualDaOpcao)")
                 self.listaDeResultados?.append(resultado)
-            } catch {
-                print("Error when trying to decode Resultado: \(error)")
+            } catch let erro {
+                self.alertaRecuperarResultado.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
+                print("Error when trying to decode Resultado:" + erro.localizedDescription)
             }
         }
     }

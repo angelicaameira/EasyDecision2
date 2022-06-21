@@ -9,7 +9,7 @@ import UIKit
 
 class CelulaCriterioTableViewCell: UITableViewCell {
     
-    var atualizaDadosCriterio: (() -> ())?
+    weak var delegate: CriterioTableViewControllerDelegate?
     
     // MARK: - View code
     
@@ -39,7 +39,7 @@ class CelulaCriterioTableViewCell: UITableViewCell {
     
     @objc func didTouchStepper(sender: UIStepper) {
         labelPeso.text = String(Int(sender.value))
-        atualizaDadosCriterio?()
+        self.delegate?.atualizaDadosCriterio(celula: self, peso: labelPeso.text ?? "1")
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

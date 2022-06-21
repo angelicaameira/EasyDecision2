@@ -16,7 +16,15 @@ struct Avaliacao: Codable {
     var idOpcao: String
     var valor: String
     
-    init(id: String, idDecisao: String, dictionary: [String: Any]) throws {
+    init(idDecisao: String, idCriterio: String, idOpcao: String, valor: String) throws {
+        self.id = "-1"
+        self.idDecisao = idDecisao
+        self.idCriterio = idCriterio
+        self.idOpcao = idOpcao
+        self.valor = valor
+    }
+    
+    init(id: String?, idDecisao: String, dictionary: [String: Any]) throws {
         self = try JSONDecoder().decode(Avaliacao.self, from: JSONSerialization.data(withJSONObject: dictionary))
         self.id = id
         self.idDecisao = idDecisao
