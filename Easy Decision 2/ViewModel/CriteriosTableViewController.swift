@@ -15,6 +15,7 @@ class CriteriosTableViewController: UITableViewController {
     var firestore: Firestore!
     var criteriosListener: ListenerRegistration!
     var criterioSelecionado: Criterio?
+    var alertaRecuperarCriterios = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de critérios", preferredStyle: .alert)
     
     // MARK: - View code
     
@@ -67,28 +68,33 @@ class CriteriosTableViewController: UITableViewController {
     }
     
     func addListenerRecuperarCriterios() {
-        guard self.decisao != nil
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
-        guard let idDecisao = self.decisao?.id
-        else { return }
+        
         criteriosListener = firestore.collection("criterios").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
             
-            if erro == nil {
-                self.listaDeCriterios.removeAll()
-                guard let snapshot = querySnapshot
-                else { return }
-                for document in snapshot.documents {
-                    do {
-                        let dictionary = document.data()
-                        let criterio = try Criterio(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.listaDeCriterios.append(criterio)
-                    } catch {
-                        print("Error when trying to decode Critério: \(error)")
-                    }
-                }
-            } else {
+            if erro != nil {
+                self.alertaRecuperarCriterios.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
                 return
             }
+            
+            self.listaDeCriterios.removeAll()
+            
+            guard let snapshot = querySnapshot
+            else { return }
+            
+            for document in snapshot.documents {
+                do {
+                    let dictionary = document.data()
+                    let criterio = try Criterio(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                    self.listaDeCriterios.append(criterio)
+                } catch {
+                    print("Error when trying to decode Critério: \(error)")
+                }
+            }
+            
             ordenaListaDeCriteriosPorOrdemAlfabetica()
             self.tableView.reloadData()
         }
@@ -122,6 +128,7 @@ class CriteriosTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaCriterio", for: indexPath) as? CelulaCriterioTableViewCell
         else { return UITableViewCell() }
+        
         let indice = indexPath.row
         let dadosCriterio = self.listaDeCriterios[indice]
         
@@ -130,18 +137,19 @@ class CriteriosTableViewController: UITableViewController {
         celula.accessoryType = .disclosureIndicator
         celula.atualizaDadosCriterio = { [unowned self] in
             
-            guard let decisao = decisao
+            guard
+                let decisao = decisao,
+                let idDecisao = decisao.id,
+                let id = dadosCriterio.id
             else { return }
-            guard let idDecisao = decisao.id
-            else { return }
-            guard let id = dadosCriterio.id
-            else { return }
+            
             firestore.collection("criterios").document(id).setData([
                 "idDecisao" : idDecisao as Any,
                 "descricao" : celula.labelDescricao.text as Any,
                 "peso" : celula.labelPeso.text as Any
             ])
         }
+        
         return celula
     }
     
