@@ -60,10 +60,11 @@ class AdicionaOpcaoViewController: UIViewController, UITextFieldDelegate {
     }
     
     func salvarNovaOpcao() {
-        guard let decisao = decisao
+        guard
+            let decisao = decisao,
+            let idDecisao = decisao.id
         else { return }
-        guard let idDecisao = decisao.id
-        else { return }
+        
         firestore.collection("opcoes").document().setData([
             "idDecisao" : idDecisao as Any,
             "descricao" : campoDescricao.text as Any
@@ -71,12 +72,12 @@ class AdicionaOpcaoViewController: UIViewController, UITextFieldDelegate {
     }
     
     func atualizarOpcao() {
-        guard let decisao = decisao
+        guard
+            let decisao = decisao,
+            let idDecisao = decisao.id,
+            let id = opcao?.id
         else { return }
-        guard let idDecisao = decisao.id
-        else { return }
-        guard let id = opcao?.id
-        else { return }
+        
         firestore.collection("opcoes").document(id).setData([
             "idDecisao" : idDecisao as Any,
             "descricao" : campoDescricao.text as Any

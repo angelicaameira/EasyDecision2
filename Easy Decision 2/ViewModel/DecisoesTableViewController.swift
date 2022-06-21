@@ -14,6 +14,7 @@ class DecisoesTableViewController: UITableViewController {
     var firestore: Firestore!
     var decisoesListener: ListenerRegistration?
     var decisaoSelecionada: Decisao?
+    var alertaRecuperarDecisoes = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de decisões", preferredStyle: .alert)
     
     // MARK: - View code
     
@@ -51,23 +52,24 @@ class DecisoesTableViewController: UITableViewController {
     func addListenerRecuperarDecisoes() {
         decisoesListener = firestore.collection("decisoes").addSnapshotListener({ querySnapshot, erro in
             
-            if erro == nil {
-                self.listaDeDecisoes?.removeAll()
-                
-                if let snapshot = querySnapshot {
-                    for document in snapshot.documents {
-                        do {
-                            let dictionary = document.data()
-                            let decisao = try Decisao(id: document.documentID, dictionary: dictionary)
-                            self.listaDeDecisoes?.append(decisao)
-                        } catch {
-                            print("Error when trying to decode Decisão: \(error)")
-                        }
-                    }
-                    self.tableView.reloadData()
-                }
-            } else {
+            if erro != nil {
+                self.alertaRecuperarDecisoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
                 return
+            }
+            
+            self.listaDeDecisoes?.removeAll()
+            
+            if let snapshot = querySnapshot {
+                for document in snapshot.documents {
+                    do {
+                        let dictionary = document.data()
+                        let decisao = try Decisao(id: document.documentID, dictionary: dictionary)
+                        self.listaDeDecisoes?.append(decisao)
+                    } catch {
+                        print("Error when trying to decode Decisão: \(error)")
+                    }
+                }
+                self.tableView.reloadData()
             }
         })
     }

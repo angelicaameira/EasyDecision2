@@ -21,6 +21,9 @@ class AvaliacaoTableViewController: UITableViewController {
     var avaliacaoSelecionada: Avaliacao?
     var avaliacaoListener: ListenerRegistration?
     var avaliacoesExistentes: [Avaliacao]? = []
+    var alertaRecuperarAvaliacoes = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Avaliações", preferredStyle: .alert)
+    var alertaRecuperarOpcoes = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Opções", preferredStyle: .alert)
+    var alertaRecuperarCriterios = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Critérios", preferredStyle: .alert)
     
     // MARK: - View code
     
@@ -67,83 +70,100 @@ class AvaliacaoTableViewController: UITableViewController {
     }
     
     func addListenerRecuperarAvaliacao() {
-        guard self.decisao != nil
-        else { return }
-        guard let idDecisao = self.decisao?.id
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
         
         avaliacaoListener = firestore.collection("avaliacoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
             
-            if erro == nil {
-                self.avaliacoesExistentes?.removeAll()
-                guard let snapshot = querySnapshot
-                else { return }
-                for document in snapshot.documents {
-                    
-                    do {
-                        let dictionary = document.data()
-                        let avaliacao = try Avaliacao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.avaliacoesExistentes?.append(avaliacao)
-                    } catch {
-                        print("Error when trying to decode Avaliação: \(error)")
-                    }
-                }
-                self.tableView.reloadData()
-            } else {
+            if erro != nil {
+                self.alertaRecuperarAvaliacoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
                 return
             }
+            
+            self.avaliacoesExistentes?.removeAll()
+            
+            guard let snapshot = querySnapshot
+            else { return }
+            
+            for document in snapshot.documents {
+                
+                do {
+                    let dictionary = document.data()
+                    let avaliacao = try Avaliacao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                    self.avaliacoesExistentes?.append(avaliacao)
+                } catch {
+                    print("Error when trying to decode Avaliação: \(error)")
+                }
+            }
+            
+            self.tableView.reloadData()
         }
     }
     
     func addListenerRecuperarCriterios() {
-        guard self.decisao != nil
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
-        guard let idDecisao = self.decisao?.id
-        else { return }
+        
         criteriosListener = firestore.collection("criterios").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
-            if erro == nil {
-                self.listaDeCriterios.removeAll()
-                guard let snapshot = querySnapshot
-                else { return }
-                for document in snapshot.documents {
-                    do {
-                        let dictionary = document.data()
-                        let criterio = try Criterio(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.listaDeCriterios.append(criterio)
-                    } catch {
-                        print("Error when trying to decode Critério: \(error)")
-                    }
-                }
-                self.tableView.reloadData()
-            } else {
+            
+            if erro != nil {
+                self.alertaRecuperarCriterios.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
                 return
             }
+            
+            self.listaDeCriterios.removeAll()
+            
+            guard let snapshot = querySnapshot
+            else { return }
+            
+            for document in snapshot.documents {
+                
+                do {
+                    let dictionary = document.data()
+                    let criterio = try Criterio(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                    self.listaDeCriterios.append(criterio)
+                } catch {
+                    print("Error when trying to decode Critério: \(error)")
+                }
+            }
+            
+            self.tableView.reloadData()
         }
     }
     
     func addListenerRecuperarOpcoes() {
-        guard self.decisao != nil
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
-        guard let idDecisao = self.decisao?.id
-        else { return }
+        
         opcoesListener = firestore.collection("opcoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
-            if erro == nil {
-                self.listaDeOpcoes.removeAll()
-                guard let snapshot = querySnapshot
-                else { return }
-                for document in snapshot.documents {
-                    do {
-                        let dictionary = document.data()
-                        let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.listaDeOpcoes.append(opcao)
-                    } catch {
-                        print("Error when trying to decode Opção: \(error)")
-                    }
-                }
-                self.tableView.reloadData()
-            } else {
+            
+            if erro != nil {
+                self.alertaRecuperarOpcoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
                 return
             }
+            
+            self.listaDeOpcoes.removeAll()
+            
+            guard let snapshot = querySnapshot
+            else { return }
+            
+            for document in snapshot.documents {
+                do {
+                    let dictionary = document.data()
+                    let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                    self.listaDeOpcoes.append(opcao)
+                } catch {
+                    print("Error when trying to decode Opção: \(error)")
+                }
+            }
+            
+            self.tableView.reloadData()
         }
     }
     
@@ -164,10 +184,11 @@ class AvaliacaoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaAvaliacao", for: indexPath) as? CelulaAvaliacaoTableViewCell
+        guard
+            let celula = tableView.dequeueReusableCell(withIdentifier: "celulaAvaliacao", for: indexPath) as? CelulaAvaliacaoTableViewCell,
+            let decisao = self.decisao
         else { return UITableViewCell() }
-        guard let decisao = self.decisao
-        else { return celula }
+        
         let dadosCriterio = self.listaDeCriterios[indexPath.row]
         let dadosOpcao = self.listaDeOpcoes[indexPath.section]
         
@@ -176,13 +197,12 @@ class AvaliacaoTableViewController: UITableViewController {
         guard let booleano = avaliacoesExistentes?.contains(where: { avaliacao in
             return avaliacao.idCriterio == dadosCriterio.id && avaliacao.idOpcao == dadosOpcao.id
         }) else { return celula }
-         
+        
         //Mostra avaliações existentes
         if (booleano) {
-            guard let dadosAvaliacao = self.avaliacoesExistentes?[indexPath.row]
-            else { return celula }
-
-            guard let idAvaliacao = dadosAvaliacao.id
+            guard
+                let dadosAvaliacao = self.avaliacoesExistentes?[indexPath.row],
+                let idAvaliacao = dadosAvaliacao.id
             else { return celula }
             
             celula.labelNota.text = dadosAvaliacao.valor
@@ -196,7 +216,7 @@ class AvaliacaoTableViewController: UITableViewController {
                 ])
             }
             
-        //Salva novas avaliações
+            //Salva novas avaliações
         } else {
             firestore.collection("avaliacoes").document().setData([
                 "idDecisao" : decisao.id as Any,

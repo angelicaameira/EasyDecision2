@@ -16,6 +16,7 @@ class ResultadoTableViewController: UITableViewController {
     var avaliacao: Avaliacao?
     var opcoesListener: ListenerRegistration!
     var listaDeOpcoes: [Opcao] = []
+    var alertaRecuperarResultado = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Resultado", preferredStyle: .alert)
     
     // MARK: - View code
     
@@ -53,29 +54,35 @@ class ResultadoTableViewController: UITableViewController {
     }
     
     func addListenerRecuperarOpcoes() {
-        guard self.decisao != nil
+        guard
+            self.decisao != nil,
+            let idDecisao = self.decisao?.id
         else { return }
-        guard let idDecisao = self.decisao?.id
-        else { return }
+        
         opcoesListener = firestore.collection("opcoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
-            if erro == nil {
-                self.listaDeOpcoes.removeAll()
-                guard let snapshot = querySnapshot
-                else { return }
-                for document in snapshot.documents {
-                    
-                    do {
-                        let dictionary = document.data()
-                        let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.listaDeOpcoes.append(opcao)
-                    } catch {
-                        print("Error when trying to decode Opção: \(error)")
-                    }
-                }
-                self.tableView.reloadData()
-            } else {
+            
+            if erro != nil {
+                self.alertaRecuperarResultado.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
                 return
             }
+            
+            self.listaDeOpcoes.removeAll()
+            
+            guard let snapshot = querySnapshot
+            else { return }
+            
+            for document in snapshot.documents {
+                
+                do {
+                    let dictionary = document.data()
+                    let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                    self.listaDeOpcoes.append(opcao)
+                } catch {
+                    print("Error when trying to decode Opção: \(error)")
+                }
+            }
+            
+            self.tableView.reloadData()
         }
     }
     

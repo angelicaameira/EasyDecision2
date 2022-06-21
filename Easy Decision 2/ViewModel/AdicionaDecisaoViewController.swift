@@ -64,10 +64,10 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
     
     func atualizarDecisao() {
         guard 
-			let decisao = decisao,
-			let id = decisao.id
+            let decisao = decisao,
+            let id = decisao.id
         else { return }
-
+        
         firestore.collection("decisoes").document(id).setData([
             "descricao" : campoDescricao.text as Any
         ])
@@ -85,7 +85,7 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
     func setup() {
         guard let decisao = self.decisao
         else { return }
-
+        
         campoDescricao.text = (decisao.descricao)
     }
     
