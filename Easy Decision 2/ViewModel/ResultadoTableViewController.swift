@@ -7,16 +7,15 @@
 
 import UIKit
 import FirebaseFirestore
+import Foundation
 
 class ResultadoTableViewController: UITableViewController {
     
     var decisao: Decisao?
-    var listaDeResultados: [Resultado] = []
-    var firestore: Firestore!
-    var avaliacao: Avaliacao?
-    var opcoesListener: ListenerRegistration!
-    var listaDeOpcoes: [Opcao] = []
-    var alertaRecuperarResultado = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Resultado", preferredStyle: .alert)
+    var listaDeOpcoes: [Opcao]? = []
+    var listaDeAvaliacoes: [Avaliacao]? = []
+    var listaDeCriterios: [Criterio]? = []
+    var listaDeResultados: [Resultado]? = []
     
     // MARK: - View code
     
@@ -40,50 +39,68 @@ class ResultadoTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        firestore = Firestore.firestore()
-        self.tableView.register(CelulaCriterioTableViewCell.self, forCellReuseIdentifier: "celulaResultado")
+        self.tableView.register(CelulaResultadoTableViewCell.self, forCellReuseIdentifier: "celulaResultado")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        addListenerRecuperarOpcoes()
+        if listaDeResultados?.count == 0 {
+            criaResultado()
+        }
+        ordenaListaDeResultadosPorPercentual()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        opcoesListener.remove()
-    }
-    
-    func addListenerRecuperarOpcoes() {
+    func criaResultado() {
         guard
-            self.decisao != nil,
-            let idDecisao = self.decisao?.id
+            let decisao = self.decisao,
+            let idDecisao = decisao.id,
+            let listaDeAvaliacoes = listaDeAvaliacoes,
+            let listaDeCriterios = listaDeCriterios,
+            let listaDeOpcoes = listaDeOpcoes
         else { return }
         
-        opcoesListener = firestore.collection("opcoes").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
+        for dadosOpcao in listaDeOpcoes {
             
-            if erro != nil {
-                self.alertaRecuperarResultado.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
-                return
-            }
+            let avaliacoesDaOpcao = listaDeAvaliacoes.filter({ avaliacao in
+                return avaliacao.idOpcao == dadosOpcao.id
+            })
             
-            self.listaDeOpcoes.removeAll()
+            var dividendo = 0.0
+            var divisor = 0.0
             
-            guard let snapshot = querySnapshot
-            else { return }
-            
-            for document in snapshot.documents {
+            for dadosCriterio in listaDeCriterios {
                 
-                do {
-                    let dictionary = document.data()
-                    let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                    self.listaDeOpcoes.append(opcao)
-                } catch {
-                    print("Error when trying to decode Opção: \(error)")
+                for dadosAvaliacao in avaliacoesDaOpcao {
+                    
+                    if dadosCriterio.id == dadosAvaliacao.idCriterio {
+                        
+                        guard
+                            let valorAvaliacao = Int(dadosAvaliacao.valor),
+                            let pesoCriterio = Int(dadosCriterio.peso)
+                        else { return }
+                        
+                        dividendo = dividendo + Double((valorAvaliacao * pesoCriterio))
+                        divisor = divisor + Double((5 * pesoCriterio))
+                    }
                 }
             }
             
-            self.tableView.reloadData()
+            let percentualDaOpcao = NumberFormatter.localizedString(from: NSNumber(value: (dividendo/divisor)), number: .percent)
+            guard let idOpcao = dadosOpcao.id
+            else { return }
+            
+            do {
+                let resultado = try Resultado(idDecisao: idDecisao, idOpcao: idOpcao, percentual: "\(percentualDaOpcao)")
+                self.listaDeResultados?.append(resultado)
+            } catch {
+                print("Error when trying to decode Resultado: \(error)")
+            }
         }
+    }
+    
+    func ordenaListaDeResultadosPorPercentual() {
+        listaDeResultados?.sort(by: { resultadoEsquerda, resultadoDireita in
+            return resultadoEsquerda.percentual > resultadoDireita.percentual
+        })
     }
     
     // MARK: - Table view data source
@@ -93,17 +110,19 @@ class ResultadoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.listaDeOpcoes.count
+        return self.listaDeOpcoes?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaResultado", for: indexPath) as? CelulaCriterioTableViewCell
+        guard let celula = tableView.dequeueReusableCell(withIdentifier: "celulaResultado", for: indexPath) as? CelulaResultadoTableViewCell,
+              self.decisao != nil
         else { return UITableViewCell() }
         let indice = indexPath.row
-        //let dadosResultado = self.listaDeResultados[indice]
-        let dadosOpcao = self.listaDeOpcoes[indice]
-        celula.labelDescricao.text = dadosOpcao.descricao
-        // celula.labelPeso.text = dadosResultado.percentual
+        let dadosResultado = self.listaDeResultados?[indice]
+        let dadosOpcao = self.listaDeOpcoes?[indice]
+        
+        celula.labelDescricao.text = dadosOpcao?.descricao
+        celula.labelPercentual.text = dadosResultado?.percentual
         
         return celula
     }

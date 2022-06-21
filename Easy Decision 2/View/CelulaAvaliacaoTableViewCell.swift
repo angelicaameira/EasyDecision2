@@ -6,11 +6,9 @@
 //
 
 import UIKit
-import FirebaseFirestore
 
 class CelulaAvaliacaoTableViewCell: UITableViewCell {
     
-    var firestore: Firestore!
     var atualizaDadosAvaliacao: (() -> ())?
     
     // MARK: - View code
@@ -46,25 +44,25 @@ class CelulaAvaliacaoTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: "celulaAvaliacao")
-        firestore = Firestore.firestore()
-        
         self.contentView.addSubview(labelDescricao)
         self.contentView.addSubview(labelNota)
         self.contentView.addSubview(botaoStepper)
         
         labelDescricao.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10).isActive = true
-        labelDescricao.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20).isActive = true
+        labelDescricao.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
         labelDescricao.trailingAnchor.constraint(equalTo: self.labelNota.leadingAnchor, constant: -10).isActive = true
+        labelDescricao.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10).isActive = true
         labelNota.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10).isActive = true
-        labelNota.widthAnchor.constraint(equalToConstant: 20).isActive = true
         labelNota.leadingAnchor.constraint(equalTo: self.labelDescricao.trailingAnchor, constant: 10).isActive = true
-        labelNota.trailingAnchor.constraint(equalTo: self.botaoStepper.leadingAnchor, constant: -10).isActive = true
+        labelNota.trailingAnchor.constraint(equalTo: self.botaoStepper.leadingAnchor, constant: -20).isActive = true
+        labelNota.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10).isActive = true
         botaoStepper.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
-        botaoStepper.leadingAnchor.constraint(equalTo: self.labelNota.trailingAnchor, constant: 10).isActive = true
-        botaoStepper.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20).isActive = true
+        botaoStepper.leadingAnchor.constraint(equalTo: self.labelNota.trailingAnchor, constant: 20).isActive = true
+        botaoStepper.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10).isActive = true
+        botaoStepper.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5).isActive = true
         
-        let labelPeso = (labelNota.text ?? "1") as String
-        botaoStepper.value = Double(labelPeso) ?? 1
+        let labelNota = (labelNota.text ?? "1") as String
+        botaoStepper.value = Double(labelNota) ?? 1
     }
     
     required init?(coder: NSCoder) {

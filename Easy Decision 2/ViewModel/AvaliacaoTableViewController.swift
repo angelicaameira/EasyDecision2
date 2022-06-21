@@ -12,13 +12,9 @@ class AvaliacaoTableViewController: UITableViewController {
     
     var decisao: Decisao?
     var firestore: Firestore!
-    var criteriosListener: ListenerRegistration?
-    var criterioSelecionado: Criterio?
     var opcoesListener: ListenerRegistration?
-    var opcaoSelecionada: Opcao?
     var listaDeOpcoes: [Opcao] = []
     var listaDeCriterios: [Criterio] = []
-    var avaliacaoSelecionada: Avaliacao?
     var avaliacaoListener: ListenerRegistration?
     var avaliacoesExistentes: [Avaliacao]? = []
     var alertaRecuperarAvaliacoes = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Avaliações", preferredStyle: .alert)
@@ -38,7 +34,9 @@ class AvaliacaoTableViewController: UITableViewController {
     @objc func vaiParaTelaDeResultados() {
         let viewDestino = ResultadoTableViewController()
         viewDestino.decisao = self.decisao
-        //  viewDestino.avaliacao =
+        viewDestino.listaDeOpcoes = self.listaDeOpcoes
+        viewDestino.listaDeCriterios = self.listaDeCriterios
+        viewDestino.listaDeAvaliacoes = self.avaliacoesExistentes
         self.navigationController?.pushViewController(viewDestino, animated: true)
     }
     
@@ -57,14 +55,11 @@ class AvaliacaoTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.criterioSelecionado = nil
-        addListenerRecuperarCriterios()
         addListenerRecuperarOpcoes()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        criteriosListener?.remove()
         opcoesListener?.remove()
         avaliacaoListener?.remove()
     }
@@ -95,39 +90,6 @@ class AvaliacaoTableViewController: UITableViewController {
                     self.avaliacoesExistentes?.append(avaliacao)
                 } catch {
                     print("Error when trying to decode Avaliação: \(error)")
-                }
-            }
-            
-            self.tableView.reloadData()
-        }
-    }
-    
-    func addListenerRecuperarCriterios() {
-        guard
-            self.decisao != nil,
-            let idDecisao = self.decisao?.id
-        else { return }
-        
-        criteriosListener = firestore.collection("criterios").whereField("idDecisao", isEqualTo: idDecisao).addSnapshotListener { [self] querySnapshot, erro in
-            
-            if erro != nil {
-                self.alertaRecuperarCriterios.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
-                return
-            }
-            
-            self.listaDeCriterios.removeAll()
-            
-            guard let snapshot = querySnapshot
-            else { return }
-            
-            for document in snapshot.documents {
-                
-                do {
-                    let dictionary = document.data()
-                    let criterio = try Criterio(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                    self.listaDeCriterios.append(criterio)
-                } catch {
-                    print("Error when trying to decode Critério: \(error)")
                 }
             }
             
@@ -188,7 +150,6 @@ class AvaliacaoTableViewController: UITableViewController {
             let celula = tableView.dequeueReusableCell(withIdentifier: "celulaAvaliacao", for: indexPath) as? CelulaAvaliacaoTableViewCell,
             let decisao = self.decisao
         else { return UITableViewCell() }
-        
         let dadosCriterio = self.listaDeCriterios[indexPath.row]
         let dadosOpcao = self.listaDeOpcoes[indexPath.section]
         
@@ -226,7 +187,6 @@ class AvaliacaoTableViewController: UITableViewController {
             ])
         }
         
-        addListenerRecuperarAvaliacao()
         return celula
     }
     
