@@ -7,11 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5BA9DAC17D01CB2099D0EEBB /* Pods_Easy_Decision_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E9337D5685FCCAE7C21EE81 /* Pods_Easy_Decision_2.framework */; };
+		20C566962A4F1099033D2054 /* Pods_Easy_Decision_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB20C03FE19D0F6ED7895A0 /* Pods_Easy_Decision_2.framework */; };
+		BF076443282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF076442282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift */; };
+		BF5F4AD227EE174800F8D2ED /* Opcao.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD127EE174800F8D2ED /* Opcao.swift */; };
+		BF5F4AD427EE17D400F8D2ED /* OpcoesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */; };
+		BF5F4AD627EE2AE800F8D2ED /* AdicionaOpcaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */; };
+		BF7DBD4C27F744790026CA72 /* ResultadoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DBD4B27F744790026CA72 /* ResultadoTableViewController.swift */; };
+		BF7DBD4E27F745750026CA72 /* Resultado.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DBD4D27F745750026CA72 /* Resultado.swift */; };
 		BF8B591D27E91A2B0051CCAD /* DecisoesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */; };
 		BF8B591F27E920A70051CCAD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF8B591E27E920A70051CCAD /* GoogleService-Info.plist */; };
 		BF8B592127E9237A0051CCAD /* AdicionaDecisaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B592027E9237A0051CCAD /* AdicionaDecisaoViewController.swift */; };
 		BF8C63DB27E9143E0051926E /* Decisao.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C63DA27E9143E0051926E /* Decisao.swift */; };
+		BFCA828127F0E2CA00985550 /* Criterio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828027F0E2CA00985550 /* Criterio.swift */; };
+		BFCA828327F0E53A00985550 /* CriteriosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828227F0E53A00985550 /* CriteriosTableViewController.swift */; };
+		BFCA828527F0E88E00985550 /* AdicionaCriterioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828427F0E88E00985550 /* AdicionaCriterioViewController.swift */; };
+		BFCA828827F0EBD200985550 /* CelulaCriterioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828727F0EBD200985550 /* CelulaCriterioTableViewCell.swift */; };
+		BFCA828A27F2449C00985550 /* AvaliacaoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828927F2449C00985550 /* AvaliacaoTableViewController.swift */; };
+		BFCA828E27F249C900985550 /* Avaliacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828D27F249C900985550 /* Avaliacao.swift */; };
 		BFD6E9E227E8C9D80093358B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6E9E127E8C9D80093358B /* AppDelegate.swift */; };
 		BFD6E9E427E8C9D80093358B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6E9E327E8C9D80093358B /* SceneDelegate.swift */; };
 		BFD6E9E927E8C9D80093358B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFD6E9E727E8C9D80093358B /* Main.storyboard */; };
@@ -20,13 +32,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1E9337D5685FCCAE7C21EE81 /* Pods_Easy_Decision_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Easy_Decision_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		346ECB306C57F1041BF7113F /* Pods-Easy Decision 2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Easy Decision 2.debug.xcconfig"; path = "Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2.debug.xcconfig"; sourceTree = "<group>"; };
-		808625FF41842F062E05BD7A /* Pods-Easy Decision 2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Easy Decision 2.release.xcconfig"; path = "Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2.release.xcconfig"; sourceTree = "<group>"; };
+		2EB20C03FE19D0F6ED7895A0 /* Pods_Easy_Decision_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Easy_Decision_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		367F33E9FBE6A258F173A765 /* Pods-Easy Decision 2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Easy Decision 2.debug.xcconfig"; path = "Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2.debug.xcconfig"; sourceTree = "<group>"; };
+		A2B2AAF2317AA3B5FEAE3BB5 /* Pods-Easy Decision 2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Easy Decision 2.release.xcconfig"; path = "Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2.release.xcconfig"; sourceTree = "<group>"; };
+		BF076442282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaAvaliacaoTableViewCell.swift; sourceTree = "<group>"; };
+		BF5F4AD127EE174800F8D2ED /* Opcao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opcao.swift; sourceTree = "<group>"; };
+		BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcoesTableViewController.swift; sourceTree = "<group>"; };
+		BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaOpcaoViewController.swift; sourceTree = "<group>"; };
+		BF7DBD4B27F744790026CA72 /* ResultadoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultadoTableViewController.swift; sourceTree = "<group>"; };
+		BF7DBD4D27F745750026CA72 /* Resultado.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resultado.swift; sourceTree = "<group>"; };
 		BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisoesTableViewController.swift; sourceTree = "<group>"; };
 		BF8B591E27E920A70051CCAD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BF8B592027E9237A0051CCAD /* AdicionaDecisaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaDecisaoViewController.swift; sourceTree = "<group>"; };
 		BF8C63DA27E9143E0051926E /* Decisao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decisao.swift; sourceTree = "<group>"; };
+		BFCA828027F0E2CA00985550 /* Criterio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Criterio.swift; sourceTree = "<group>"; };
+		BFCA828227F0E53A00985550 /* CriteriosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriteriosTableViewController.swift; sourceTree = "<group>"; };
+		BFCA828427F0E88E00985550 /* AdicionaCriterioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaCriterioViewController.swift; sourceTree = "<group>"; };
+		BFCA828727F0EBD200985550 /* CelulaCriterioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaCriterioTableViewCell.swift; sourceTree = "<group>"; };
+		BFCA828927F2449C00985550 /* AvaliacaoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvaliacaoTableViewController.swift; sourceTree = "<group>"; };
+		BFCA828D27F249C900985550 /* Avaliacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Avaliacao.swift; sourceTree = "<group>"; };
 		BFD6E9DE27E8C9D80093358B /* Easy Decision 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Decision 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD6E9E127E8C9D80093358B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFD6E9E327E8C9D80093358B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,17 +65,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BA9DAC17D01CB2099D0EEBB /* Pods_Easy_Decision_2.framework in Frameworks */,
+				20C566962A4F1099033D2054 /* Pods_Easy_Decision_2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		172D627CAE04A33ED442BE43 /* Frameworks */ = {
+		4D7CAD9E5C199B4CC1546122 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1E9337D5685FCCAE7C21EE81 /* Pods_Easy_Decision_2.framework */,
+				2EB20C03FE19D0F6ED7895A0 /* Pods_Easy_Decision_2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -60,6 +84,10 @@
 			isa = PBXGroup;
 			children = (
 				BF8C63DA27E9143E0051926E /* Decisao.swift */,
+				BF5F4AD127EE174800F8D2ED /* Opcao.swift */,
+				BFCA828027F0E2CA00985550 /* Criterio.swift */,
+				BFCA828D27F249C900985550 /* Avaliacao.swift */,
+				BF7DBD4D27F745750026CA72 /* Resultado.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -67,6 +95,8 @@
 		BF8C63D827E914090051926E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BFCA828727F0EBD200985550 /* CelulaCriterioTableViewCell.swift */,
+				BF076442282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -76,6 +106,12 @@
 			children = (
 				BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */,
 				BF8B592027E9237A0051CCAD /* AdicionaDecisaoViewController.swift */,
+				BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */,
+				BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */,
+				BFCA828227F0E53A00985550 /* CriteriosTableViewController.swift */,
+				BFCA828427F0E88E00985550 /* AdicionaCriterioViewController.swift */,
+				BFCA828927F2449C00985550 /* AvaliacaoTableViewController.swift */,
+				BF7DBD4B27F744790026CA72 /* ResultadoTableViewController.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -86,7 +122,7 @@
 				BFD6E9E027E8C9D80093358B /* Easy Decision 2 */,
 				BFD6E9DF27E8C9D80093358B /* Products */,
 				D7924B8460B13464BF7697BF /* Pods */,
-				172D627CAE04A33ED442BE43 /* Frameworks */,
+				4D7CAD9E5C199B4CC1546122 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,9 +137,9 @@
 		BFD6E9E027E8C9D80093358B /* Easy Decision 2 */ = {
 			isa = PBXGroup;
 			children = (
-				BF8C63D927E914120051926E /* ViewModel */,
-				BF8C63D827E914090051926E /* View */,
 				BF8C63D727E913FF0051926E /* Model */,
+				BF8C63D827E914090051926E /* View */,
+				BF8C63D927E914120051926E /* ViewModel */,
 				BFD6E9E127E8C9D80093358B /* AppDelegate.swift */,
 				BFD6E9E327E8C9D80093358B /* SceneDelegate.swift */,
 				BFD6E9E727E8C9D80093358B /* Main.storyboard */,
@@ -118,8 +154,8 @@
 		D7924B8460B13464BF7697BF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				346ECB306C57F1041BF7113F /* Pods-Easy Decision 2.debug.xcconfig */,
-				808625FF41842F062E05BD7A /* Pods-Easy Decision 2.release.xcconfig */,
+				367F33E9FBE6A258F173A765 /* Pods-Easy Decision 2.debug.xcconfig */,
+				A2B2AAF2317AA3B5FEAE3BB5 /* Pods-Easy Decision 2.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -131,11 +167,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFD6E9F227E8C9D90093358B /* Build configuration list for PBXNativeTarget "Easy Decision 2" */;
 			buildPhases = (
-				C0F23DF98B7277139A261F49 /* [CP] Check Pods Manifest.lock */,
+				2D4D47FD27C8D12EE2506ED9 /* [CP] Check Pods Manifest.lock */,
 				BFD6E9DA27E8C9D80093358B /* Sources */,
 				BFD6E9DB27E8C9D80093358B /* Frameworks */,
 				BFD6E9DC27E8C9D80093358B /* Resources */,
-				1564F8ED3D88603F82D375E5 /* [CP] Embed Pods Frameworks */,
+				721976EA19FA4DA8DD591717 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -194,24 +230,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1564F8ED3D88603F82D375E5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C0F23DF98B7277139A261F49 /* [CP] Check Pods Manifest.lock */ = {
+		2D4D47FD27C8D12EE2506ED9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -233,6 +252,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		721976EA19FA4DA8DD591717 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -240,11 +276,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF5F4AD427EE17D400F8D2ED /* OpcoesTableViewController.swift in Sources */,
+				BF7DBD4E27F745750026CA72 /* Resultado.swift in Sources */,
 				BFD6E9E227E8C9D80093358B /* AppDelegate.swift in Sources */,
+				BF076443282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift in Sources */,
+				BFCA828827F0EBD200985550 /* CelulaCriterioTableViewCell.swift in Sources */,
+				BF7DBD4C27F744790026CA72 /* ResultadoTableViewController.swift in Sources */,
 				BF8C63DB27E9143E0051926E /* Decisao.swift in Sources */,
 				BF8B592127E9237A0051CCAD /* AdicionaDecisaoViewController.swift in Sources */,
 				BF8B591D27E91A2B0051CCAD /* DecisoesTableViewController.swift in Sources */,
+				BF5F4AD227EE174800F8D2ED /* Opcao.swift in Sources */,
+				BFCA828E27F249C900985550 /* Avaliacao.swift in Sources */,
+				BFCA828327F0E53A00985550 /* CriteriosTableViewController.swift in Sources */,
+				BFCA828127F0E2CA00985550 /* Criterio.swift in Sources */,
+				BFCA828527F0E88E00985550 /* AdicionaCriterioViewController.swift in Sources */,
+				BFCA828A27F2449C00985550 /* AvaliacaoTableViewController.swift in Sources */,
 				BFD6E9E427E8C9D80093358B /* SceneDelegate.swift in Sources */,
+				BF5F4AD627EE2AE800F8D2ED /* AdicionaOpcaoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +434,7 @@
 		};
 		BFD6E9F327E8C9D90093358B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 346ECB306C57F1041BF7113F /* Pods-Easy Decision 2.debug.xcconfig */;
+			baseConfigurationReference = 367F33E9FBE6A258F173A765 /* Pods-Easy Decision 2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -400,7 +448,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -416,7 +464,7 @@
 		};
 		BFD6E9F427E8C9D90093358B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 808625FF41842F062E05BD7A /* Pods-Easy Decision 2.release.xcconfig */;
+			baseConfigurationReference = A2B2AAF2317AA3B5FEAE3BB5 /* Pods-Easy Decision 2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -430,7 +478,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

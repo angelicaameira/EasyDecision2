@@ -14,6 +14,7 @@ class DecisoesTableViewController: UITableViewController {
     var firestore: Firestore!
     var decisoesListener: ListenerRegistration?
     var decisaoSelecionada: Decisao?
+    var alertaRecuperarDecisoes = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de decisões", preferredStyle: .alert)
     
     // MARK: - View code
     
@@ -51,21 +52,24 @@ class DecisoesTableViewController: UITableViewController {
     func addListenerRecuperarDecisoes() {
         decisoesListener = firestore.collection("decisoes").addSnapshotListener({ querySnapshot, erro in
             
-            if erro == nil {
-                self.listaDeDecisoes?.removeAll()
-                
-                if let snapshot = querySnapshot {
-                    for document in snapshot.documents {
-                        do {
-                            let dictionary = document.data()
-                            let decisao = try Decisao(id: document.documentID, dictionary: dictionary)
-                            self.listaDeDecisoes?.append(decisao)
-                        } catch {
-                            print("Error when trying to decode Decisão: \(error)")
-                        }
+            if erro != nil {
+                self.alertaRecuperarDecisoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
+                return
+            }
+            
+            self.listaDeDecisoes?.removeAll()
+            
+            if let snapshot = querySnapshot {
+                for document in snapshot.documents {
+                    do {
+                        let dictionary = document.data()
+                        let decisao = try Decisao(id: document.documentID, dictionary: dictionary)
+                        self.listaDeDecisoes?.append(decisao)
+                    } catch {
+                        print("Error when trying to decode Decisão: \(error)")
                     }
-                    self.tableView.reloadData()
                 }
+                self.tableView.reloadData()
             }
         })
     }
@@ -93,7 +97,6 @@ class DecisoesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celula = tableView.dequeueReusableCell(withIdentifier: "celulaDecisao", for: indexPath)
-        
         let indice = indexPath.row
         guard let dadosDecisao = self.listaDeDecisoes?[indice]
         else { return celula }
@@ -104,24 +107,29 @@ class DecisoesTableViewController: UITableViewController {
         return celula
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.decisaoSelecionada = self.listaDeDecisoes?[indexPath.row]
+        let viewDestino = OpcoesTableViewController()
+        viewDestino.decisao = self.decisaoSelecionada
+        self.navigationController?.pushViewController(viewDestino, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let acoes = [
             UIContextualAction(style: .destructive, title: "Apagar", handler: { [weak self] (contextualAction, view, _) in
                 guard let self = self
                 else { return }
-                
                 self.removerDecisao(indexPath: indexPath)
                 tableView.reloadData()
             }),
             UIContextualAction(style: .normal, title: "Editar", handler: { [weak self] (contextualAction, view, _) in
                 guard let self = self
                 else { return }
-                
                 let indice = indexPath.row
                 let viewDeDestino = AdicionaDecisaoViewController()
                 self.decisaoSelecionada = self.listaDeDecisoes?[indice]
                 viewDeDestino.decisao = self.decisaoSelecionada
-                
                 self.present(UINavigationController(rootViewController: viewDeDestino), animated: true)
             })
         ]
