@@ -20,7 +20,7 @@ class CelulaCriterioTableViewCell: UITableViewCell {
         view.contentMode = .left
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-      }()
+    }()
     
     lazy var labelPeso: UILabel = {
         let view = UILabel()
@@ -28,7 +28,7 @@ class CelulaCriterioTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = String(Int(botaoStepper.value))
         return view
-      }()
+    }()
     
     lazy var botaoStepper: UIStepper = {
         let view = UIStepper()

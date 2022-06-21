@@ -107,7 +107,7 @@ class DecisoesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.decisaoSelecionada = self.listaDeDecisoes[indexPath.row]
+        self.decisaoSelecionada = self.listaDeDecisoes?[indexPath.row]
         let viewDestino = OpcoesTableViewController()
         viewDestino.decisao = self.decisaoSelecionada
         self.navigationController?.pushViewController(viewDestino, animated: true)

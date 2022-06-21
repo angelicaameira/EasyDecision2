@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 
 class CelulaAvaliacaoTableViewCell: UITableViewCell {
-
+    
     var firestore: Firestore!
     var atualizaDadosAvaliacao: (() -> ())?
     
@@ -20,7 +20,7 @@ class CelulaAvaliacaoTableViewCell: UITableViewCell {
         view.contentMode = .left
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-      }()
+    }()
     
     lazy var labelNota: UILabel = {
         let view = UILabel()
@@ -28,7 +28,7 @@ class CelulaAvaliacaoTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = String(Int(botaoStepper.value))
         return view
-      }()
+    }()
     
     lazy var botaoStepper: UIStepper = {
         let view = UIStepper()
@@ -70,5 +70,4 @@ class CelulaAvaliacaoTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

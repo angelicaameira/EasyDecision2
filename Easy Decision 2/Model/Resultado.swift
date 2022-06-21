@@ -21,5 +21,4 @@ struct Resultado: Codable {
         self.idDecisao = idDecisao
         self.idAvaliacao = idAvaliacao
     }
-    
 }

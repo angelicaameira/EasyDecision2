@@ -19,5 +19,4 @@ struct Opcao: Codable {
         self.id = id
         self.idDecisao = idDecisao
     }
-    
 }
