@@ -78,13 +78,13 @@ class EditaAvalicacaoViewController: UIViewController {
         campoValor.text = String(Int(sender.value))
     }
     
-    func atualizarAvaliacao(){
-        guard let decisao = decisao
+    func atualizarAvaliacao() {
+        guard
+            let decisao = decisao,
+            let idDecisao = decisao.id,
+            let id = avaliacao?.id
         else { return }
-        guard let idDecisao = decisao.id
-        else { return }
-        guard let id = avaliacao?.id
-        else { return }
+        
         firestore.collection("avaliacoes").document(id).setData([
             "idCriterio" : avaliacao?.idCriterio as Any,
             "idDecisao" : idDecisao as Any,
