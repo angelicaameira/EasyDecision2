@@ -17,6 +17,7 @@ class AvaliacaoTableViewController: UITableViewController {
     var listaDeCriterios: [Criterio] = []
     var avaliacaoListener: ListenerRegistration?
     var avaliacoesExistentes: [Avaliacao]? = []
+    var avaliacaoSelecionada: Avaliacao?
     var alertaRecuperarAvaliacoes = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Avaliações", preferredStyle: .alert)
     var alertaRecuperarOpcoes = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Opções", preferredStyle: .alert)
     var alertaRecuperarCriterios = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de Critérios", preferredStyle: .alert)
@@ -129,6 +130,12 @@ class AvaliacaoTableViewController: UITableViewController {
         }
     }
     
+    func ordenaListaDeOpcoesPorOrdemAlfabetica() {
+        listaDeOpcoes.sort(by: { opcaoEsquerda, opcaoDireita in
+            return opcaoEsquerda.descricao < opcaoDireita.descricao
+        })
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -154,6 +161,7 @@ class AvaliacaoTableViewController: UITableViewController {
         let dadosOpcao = self.listaDeOpcoes[indexPath.section]
         
         celula.labelDescricao.text = dadosCriterio.descricao
+        celula.accessoryType = .disclosureIndicator
         
         guard let booleano = avaliacoesExistentes?.contains(where: { avaliacao in
             return avaliacao.idCriterio == dadosCriterio.id && avaliacao.idOpcao == dadosOpcao.id
@@ -177,7 +185,7 @@ class AvaliacaoTableViewController: UITableViewController {
                 ])
             }
             
-            //Salva novas avaliações
+        //Salva novas avaliações
         } else {
             firestore.collection("avaliacoes").document().setData([
                 "idDecisao" : decisao.id as Any,
@@ -192,5 +200,10 @@ class AvaliacaoTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.avaliacaoSelecionada = self.avaliacoesExistentes?[indexPath.row]
+        let viewDestino = EditaAvalicacaoViewController()
+        viewDestino.avaliacao = self.avaliacaoSelecionada
+        viewDestino.decisao = self.decisao
+        self.present(UINavigationController(rootViewController: viewDestino), animated: true)
     }
 }

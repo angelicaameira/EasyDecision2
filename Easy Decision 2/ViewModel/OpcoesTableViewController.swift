@@ -92,10 +92,18 @@ class OpcoesTableViewController: UITableViewController {
                 } catch {
                     print("Error when trying to decode Opção: \(error)")
                 }
+                ordenaListaDeOpcoesPorOrdemAlfabetica()
+                self.tableView.reloadData()
             }
             
             self.tableView.reloadData()
         }
+    }
+    
+    func ordenaListaDeOpcoesPorOrdemAlfabetica() {
+        listaDeOpcoes.sort(by: { opcaoEsquerda, opcaoDireita in
+            return opcaoEsquerda.descricao < opcaoDireita.descricao
+        })
     }
     
     func removerOpcao(indexPath: IndexPath) {

@@ -95,8 +95,15 @@ class CriteriosTableViewController: UITableViewController {
                 }
             }
             
+            ordenaListaDeCriteriosPorOrdemAlfabetica()
             self.tableView.reloadData()
         }
+    }
+    
+    func ordenaListaDeCriteriosPorOrdemAlfabetica() {
+        listaDeCriterios.sort(by: { criterioEsquerda, criterioDireita in
+            return criterioEsquerda.descricao < criterioDireita.descricao
+        })
     }
     
     func removerCriterio(indexPath: IndexPath){
@@ -127,6 +134,7 @@ class CriteriosTableViewController: UITableViewController {
         
         celula.labelDescricao.text = dadosCriterio.descricao
         celula.labelPeso.text = dadosCriterio.peso
+        celula.accessoryType = .disclosureIndicator
         celula.atualizaDadosCriterio = { [unowned self] in
             
             guard
