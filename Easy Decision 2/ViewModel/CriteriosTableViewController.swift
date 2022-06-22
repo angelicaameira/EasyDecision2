@@ -81,8 +81,10 @@ class CriteriosTableViewController: UITableViewController, CriterioTableViewCont
             }
             
             self.listaDeCriterios.removeAll()
+            
             guard let snapshot = querySnapshot
             else { return }
+            
             for document in snapshot.documents {
                 do {
                     let dictionary = document.data()

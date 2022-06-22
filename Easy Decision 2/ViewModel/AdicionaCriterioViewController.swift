@@ -88,8 +88,10 @@ class AdicionaCriterioViewController: UIViewController, UITextFieldDelegate {
         botaoStepper.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -15).isActive = true
         
         campoDescricao.delegate = self
+        
         guard let campoPeso = campoPeso.text
         else { return }
+        
         botaoStepper.value = Double(campoPeso) ?? 1
     }
     
@@ -102,6 +104,7 @@ class AdicionaCriterioViewController: UIViewController, UITextFieldDelegate {
             let decisao = decisao,
             let idDecisao = decisao.id
         else { return }
+        
         firestore.collection("criterios").document().setData([
             "idDecisao" : idDecisao as Any,
             "descricao" : campoDescricao.text as Any,
@@ -115,6 +118,7 @@ class AdicionaCriterioViewController: UIViewController, UITextFieldDelegate {
             let idDecisao = decisao.id,
             let id = criterio?.id
         else { return }
+        
         firestore.collection("criterios").document(id).setData([
             "idDecisao" : idDecisao as Any,
             "descricao" : campoDescricao.text as Any,
@@ -134,6 +138,7 @@ class AdicionaCriterioViewController: UIViewController, UITextFieldDelegate {
     func setup() {
         guard let criterio = self.criterio
         else { return }
+        
         campoDescricao.text = (criterio.descricao)
         campoPeso.text = String(criterio.peso)
     }

@@ -78,10 +78,12 @@ class OpcoesTableViewController: UITableViewController {
                 self.alertaRecuperarOpcoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
                 return
             }
-
+            
             self.listaDeOpcoes.removeAll()
+            
             guard let snapshot = querySnapshot
             else { return }
+            
             for document in snapshot.documents {
                 do {
                     let dictionary = document.data()

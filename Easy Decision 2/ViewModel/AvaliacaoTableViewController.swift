@@ -96,6 +96,24 @@ class AvaliacaoTableViewController: UITableViewController, AvaliacaoTableViewCon
             } else {
                 self.tableView.reloadData()
             }
+            
+            self.avaliacoesExistentes?.removeAll()
+            
+            guard let snapshot = querySnapshot
+            else { return }
+            
+            for document in snapshot.documents {
+                
+                do {
+                    let dictionary = document.data()
+                    let avaliacao = try Avaliacao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                    self.avaliacoesExistentes?.append(avaliacao)
+                } catch {
+                    print("Error when trying to decode Avaliação: \(error)")
+                }
+            }
+            
+            self.tableView.reloadData()
         }
     }
     
@@ -115,22 +133,22 @@ class AvaliacaoTableViewController: UITableViewController, AvaliacaoTableViewCon
                 return
             }
             
-            if erro == nil {
-                self.listaDeOpcoes.removeAll()
-                guard let snapshot = querySnapshot
-                else { return }
-                for document in snapshot.documents {
-                    do {
-                        let dictionary = document.data()
-                        let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
-                        self.listaDeOpcoes.append(opcao)
-                    } catch let erro {
-                        self.alertaRecuperarAvaliacoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
-                        print("Error when trying to decode Opção:" + erro.localizedDescription)
-                    }
+            self.listaDeOpcoes.removeAll()
+            
+            guard let snapshot = querySnapshot
+            else { return }
+            
+            for document in snapshot.documents {
+                do {
+                    let dictionary = document.data()
+                    let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
+                    self.listaDeOpcoes.append(opcao)
+                } catch {
+                    print("Error when trying to decode Opção: \(error)")
                 }
-                self.ordenaListaDeOpcoesPorOrdemAlfabetica()
             }
+            
+            self.tableView.reloadData()
         }
     }
     

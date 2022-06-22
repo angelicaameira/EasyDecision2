@@ -10,9 +10,9 @@ import FirebaseFirestore
 
 class DecisoesTableViewController: UITableViewController {
     
-    var listaDeDecisoes: [Decisao] = []
+    var listaDeDecisoes: [Decisao]? = []
     var firestore: Firestore!
-    var decisoesListener: ListenerRegistration!
+    var decisoesListener: ListenerRegistration?
     var decisaoSelecionada: Decisao?
     var alertaRecuperarDecisoes = UIAlertController(title: "Atenção!", message: "Um erro ocorreu ao recuperar a lista de decisões", preferredStyle: .alert)
     
@@ -46,7 +46,7 @@ class DecisoesTableViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        decisoesListener.remove()
+        decisoesListener?.remove()
     }
     
     func addListenerRecuperarDecisoes() {
@@ -57,14 +57,14 @@ class DecisoesTableViewController: UITableViewController {
                 return
             }
             
-            self.listaDeDecisoes.removeAll()
+            self.listaDeDecisoes?.removeAll()
             
             if let snapshot = querySnapshot {
                 for document in snapshot.documents {
                     do {
                         let dictionary = document.data()
                         let decisao = try Decisao(id: document.documentID, dictionary: dictionary)
-                        self.listaDeDecisoes.append(decisao)
+                        self.listaDeDecisoes?.append(decisao)
                     } catch let erro {
                         self.alertaRecuperarDecisoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
                         print("Error when trying to decode Decisão:" + erro.localizedDescription)
@@ -77,17 +77,19 @@ class DecisoesTableViewController: UITableViewController {
     }
     
     func ordenaListaDeDecisoesPorOrdemAlfabetica() {
-        listaDeDecisoes.sort(by: { decisaoEsquerda, decisaoDireita in
+        listaDeDecisoes?.sort(by: { decisaoEsquerda, decisaoDireita in
             return decisaoEsquerda.descricao < decisaoDireita.descricao
         })
     }
     
     func removerDecisao(indexPath: IndexPath) {
-        let decisao = self.listaDeDecisoes[indexPath.row]
-        guard let idDecisao = decisao.id
+        guard
+            let decisao = self.listaDeDecisoes?[indexPath.row],
+            let idDecisao = decisao.id
         else { return }
+        
         firestore.collection("decisoes").document(idDecisao).delete()
-        self.listaDeDecisoes.remove(at: indexPath.row)
+        self.listaDeDecisoes?.remove(at: indexPath.row)
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
@@ -98,13 +100,14 @@ class DecisoesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listaDeDecisoes.count
+        return listaDeDecisoes?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celula = tableView.dequeueReusableCell(withIdentifier: "celulaDecisao", for: indexPath)
         let indice = indexPath.row
-        let dadosDecisao = self.listaDeDecisoes[indice]
+        guard let dadosDecisao = self.listaDeDecisoes?[indice]
+        else { return celula }
         
         celula.accessoryType = .disclosureIndicator
         celula.textLabel?.text = dadosDecisao.descricao
@@ -114,7 +117,7 @@ class DecisoesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.decisaoSelecionada = self.listaDeDecisoes[indexPath.row]
+        self.decisaoSelecionada = self.listaDeDecisoes?[indexPath.row]
         let viewDestino = OpcoesTableViewController()
         viewDestino.decisao = self.decisaoSelecionada
         self.navigationController?.pushViewController(viewDestino, animated: true)
@@ -132,8 +135,8 @@ class DecisoesTableViewController: UITableViewController {
                 guard let self = self
                 else { return }
                 let indice = indexPath.row
-                self.decisaoSelecionada = self.listaDeDecisoes[indice]
                 let viewDeDestino = AdicionaDecisaoViewController()
+                self.decisaoSelecionada = self.listaDeDecisoes?[indice]
                 viewDeDestino.decisao = self.decisaoSelecionada
                 self.present(UINavigationController(rootViewController: viewDeDestino), animated: true)
             })

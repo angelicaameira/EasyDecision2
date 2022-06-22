@@ -34,7 +34,6 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
     
     override func loadView() {
         super.loadView()
-        
         self.view.backgroundColor = .white
         self.navigationItem.rightBarButtonItems = [botaoFeito]
         self.view.addSubview(campoDescricao)
@@ -48,7 +47,6 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         firestore = Firestore.firestore()
         setup()
         
@@ -69,13 +67,14 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
             let decisao = decisao,
             let id = decisao.id
         else { return }
+        
         firestore.collection("decisoes").document(id).setData([
             "descricao" : campoDescricao.text as Any
         ])
     }
     
     @objc func feito() {
-        if decisao == nil{
+        if decisao == nil {
             salvarNovaDecisao()
         } else {
             atualizarDecisao()
@@ -86,6 +85,7 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
     func setup() {
         guard let decisao = self.decisao
         else { return }
+        
         campoDescricao.text = (decisao.descricao)
     }
     
@@ -94,4 +94,3 @@ class AdicionaDecisaoViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 }
-
