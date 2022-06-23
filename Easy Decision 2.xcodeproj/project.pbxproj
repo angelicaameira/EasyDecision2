@@ -8,18 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		20C566962A4F1099033D2054 /* Pods_Easy_Decision_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB20C03FE19D0F6ED7895A0 /* Pods_Easy_Decision_2.framework */; };
+		BF0619FD2863D42A004062CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF0619FC2863D42A004062CD /* GoogleService-Info.plist */; };
 		BF076443282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF076442282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift */; };
 		BF5F4AD227EE174800F8D2ED /* Opcao.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD127EE174800F8D2ED /* Opcao.swift */; };
 		BF5F4AD427EE17D400F8D2ED /* OpcoesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */; };
 		BF5F4AD627EE2AE800F8D2ED /* AdicionaOpcaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */; };
 		BF68068528358B9A002CC289 /* CelulaResultadoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68068428358B9A002CC289 /* CelulaResultadoTableViewCell.swift */; };
-		BF7A55D42856338D00A1E165 /* EditaAvalicacaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A55D32856338D00A1E165 /* EditaAvalicacaoViewController.swift */; };
 		BF7DBD4C27F744790026CA72 /* ResultadoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DBD4B27F744790026CA72 /* ResultadoTableViewController.swift */; };
 		BF7DBD4E27F745750026CA72 /* Resultado.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DBD4D27F745750026CA72 /* Resultado.swift */; };
 		BF8B591D27E91A2B0051CCAD /* DecisoesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */; };
 		BF8B592127E9237A0051CCAD /* AdicionaDecisaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B592027E9237A0051CCAD /* AdicionaDecisaoViewController.swift */; };
 		BF8C63DB27E9143E0051926E /* Decisao.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C63DA27E9143E0051926E /* Decisao.swift */; };
-		BFAB907028552DA200C7AF2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFAB906F28552DA200C7AF2A /* GoogleService-Info.plist */; };
 		BFCA828127F0E2CA00985550 /* Criterio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828027F0E2CA00985550 /* Criterio.swift */; };
 		BFCA828327F0E53A00985550 /* CriteriosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828227F0E53A00985550 /* CriteriosTableViewController.swift */; };
 		BFCA828527F0E88E00985550 /* AdicionaCriterioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA828427F0E88E00985550 /* AdicionaCriterioViewController.swift */; };
@@ -37,18 +36,17 @@
 		2EB20C03FE19D0F6ED7895A0 /* Pods_Easy_Decision_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Easy_Decision_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		367F33E9FBE6A258F173A765 /* Pods-Easy Decision 2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Easy Decision 2.debug.xcconfig"; path = "Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2.debug.xcconfig"; sourceTree = "<group>"; };
 		A2B2AAF2317AA3B5FEAE3BB5 /* Pods-Easy Decision 2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Easy Decision 2.release.xcconfig"; path = "Target Support Files/Pods-Easy Decision 2/Pods-Easy Decision 2.release.xcconfig"; sourceTree = "<group>"; };
+		BF0619FC2863D42A004062CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BF076442282D6E3F00C609E5 /* CelulaAvaliacaoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaAvaliacaoTableViewCell.swift; sourceTree = "<group>"; };
 		BF5F4AD127EE174800F8D2ED /* Opcao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opcao.swift; sourceTree = "<group>"; };
 		BF5F4AD327EE17D400F8D2ED /* OpcoesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcoesTableViewController.swift; sourceTree = "<group>"; };
 		BF5F4AD527EE2AE700F8D2ED /* AdicionaOpcaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaOpcaoViewController.swift; sourceTree = "<group>"; };
 		BF68068428358B9A002CC289 /* CelulaResultadoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaResultadoTableViewCell.swift; sourceTree = "<group>"; };
-		BF7A55D32856338D00A1E165 /* EditaAvalicacaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditaAvalicacaoViewController.swift; sourceTree = "<group>"; };
 		BF7DBD4B27F744790026CA72 /* ResultadoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultadoTableViewController.swift; sourceTree = "<group>"; };
 		BF7DBD4D27F745750026CA72 /* Resultado.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resultado.swift; sourceTree = "<group>"; };
 		BF8B591C27E91A2B0051CCAD /* DecisoesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisoesTableViewController.swift; sourceTree = "<group>"; };
 		BF8B592027E9237A0051CCAD /* AdicionaDecisaoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaDecisaoViewController.swift; sourceTree = "<group>"; };
 		BF8C63DA27E9143E0051926E /* Decisao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decisao.swift; sourceTree = "<group>"; };
-		BFAB906F28552DA200C7AF2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BFCA828027F0E2CA00985550 /* Criterio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Criterio.swift; sourceTree = "<group>"; };
 		BFCA828227F0E53A00985550 /* CriteriosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriteriosTableViewController.swift; sourceTree = "<group>"; };
 		BFCA828427F0E88E00985550 /* AdicionaCriterioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdicionaCriterioViewController.swift; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 				BFCA828227F0E53A00985550 /* CriteriosTableViewController.swift */,
 				BFCA828427F0E88E00985550 /* AdicionaCriterioViewController.swift */,
 				BFCA828927F2449C00985550 /* AvaliacaoTableViewController.swift */,
-				BF7A55D32856338D00A1E165 /* EditaAvalicacaoViewController.swift */,
 				BF7DBD4B27F744790026CA72 /* ResultadoTableViewController.swift */,
 			);
 			path = ViewModel;
@@ -152,7 +149,7 @@
 				BFD6E9EA27E8C9D90093358B /* Assets.xcassets */,
 				BFD6E9EC27E8C9D90093358B /* LaunchScreen.storyboard */,
 				BFD6E9EF27E8C9D90093358B /* Info.plist */,
-				BFAB906F28552DA200C7AF2A /* GoogleService-Info.plist */,
+				BF0619FC2863D42A004062CD /* GoogleService-Info.plist */,
 			);
 			path = "Easy Decision 2";
 			sourceTree = "<group>";
@@ -226,10 +223,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFAB907028552DA200C7AF2A /* GoogleService-Info.plist in Resources */,
 				BFD6E9EE27E8C9D90093358B /* LaunchScreen.storyboard in Resources */,
 				BFD6E9EB27E8C9D90093358B /* Assets.xcassets in Resources */,
 				BFD6E9E927E8C9D80093358B /* Main.storyboard in Resources */,
+				BF0619FD2863D42A004062CD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +286,6 @@
 				BFCA828827F0EBD200985550 /* CelulaCriterioTableViewCell.swift in Sources */,
 				BF7DBD4C27F744790026CA72 /* ResultadoTableViewController.swift in Sources */,
 				BF8C63DB27E9143E0051926E /* Decisao.swift in Sources */,
-				BF7A55D42856338D00A1E165 /* EditaAvalicacaoViewController.swift in Sources */,
 				BF8B592127E9237A0051CCAD /* AdicionaDecisaoViewController.swift in Sources */,
 				BF8B591D27E91A2B0051CCAD /* DecisoesTableViewController.swift in Sources */,
 				BF5F4AD227EE174800F8D2ED /* Opcao.swift in Sources */,

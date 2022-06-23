@@ -65,12 +65,12 @@ class DecisoesTableViewController: UITableViewController {
                         let dictionary = document.data()
                         let decisao = try Decisao(id: document.documentID, dictionary: dictionary)
                         self.listaDeDecisoes?.append(decisao)
-                    } catch {
-                        print("Error when trying to decode Decisão: \(error)")
+                    } catch let erro {
+                        self.alertaRecuperarDecisoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
+                        print("Error when trying to decode Decisão:" + erro.localizedDescription)
                     }
-                    self.ordenaListaDeDecisoesPorOrdemAlfabetica()
-                    self.tableView.reloadData()
                 }
+                self.ordenaListaDeDecisoesPorOrdemAlfabetica()
                 self.tableView.reloadData()
             }
         })

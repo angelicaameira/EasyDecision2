@@ -9,7 +9,7 @@ import UIKit
 
 class CelulaAvaliacaoTableViewCell: UITableViewCell {
     
-    var atualizaDadosAvaliacao: (() -> ())?
+    weak var delegate: AvaliacaoTableViewControllerDelegate?
     
     // MARK: - View code
     
@@ -39,7 +39,7 @@ class CelulaAvaliacaoTableViewCell: UITableViewCell {
     
     @objc func didTouchStepper(sender: UIStepper) {
         labelNota.text = String(Int(sender.value))
-        atualizaDadosAvaliacao?()
+        self.delegate?.atualizaDadosAvaliacao(celula: self, valor: labelNota.text ?? "1")
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

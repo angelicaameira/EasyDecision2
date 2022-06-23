@@ -89,13 +89,12 @@ class OpcoesTableViewController: UITableViewController {
                     let dictionary = document.data()
                     let opcao = try Opcao(id: document.documentID, idDecisao: idDecisao, dictionary: dictionary)
                     self.listaDeOpcoes.append(opcao)
-                } catch {
-                    print("Error when trying to decode Opção: \(error)")
+                } catch let erro {
+                    self.alertaRecuperarOpcoes.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "tente novamente"), style: .default, handler: nil))
+                    print("Error when trying to decode Opção:" + erro.localizedDescription)
                 }
-                ordenaListaDeOpcoesPorOrdemAlfabetica()
-                self.tableView.reloadData()
             }
-            
+            ordenaListaDeOpcoesPorOrdemAlfabetica()
             self.tableView.reloadData()
         }
     }
